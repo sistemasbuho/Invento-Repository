@@ -23,7 +23,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('actives/',include(('apps.actives.urls','actives'))),
     path("", include("apps.authentication.urls")), # Auth routes - login / register
-    path("", include("apps.home.urls"))    
+    path("", include("apps.home.urls")),
+    path("users/", include("apps.assignment.urls")),        
     
 	#path('', ViewHome, name='home'),
 

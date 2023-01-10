@@ -42,6 +42,9 @@ class TypeDevices(models.Model):
         
 class Manufacturer(models.Model):
     name=models.CharField('Nombre',max_length=150)
+    is_device=models.BooleanField(default=False,verbose_name=u'Es dispositivo' ,null=True, blank=True)
+    is_computer=models.BooleanField(default=False,verbose_name=u'Es computador' ,null=True, blank=True)
+
 
     def __str__(self):
         return self.name   
@@ -55,7 +58,8 @@ class ModelManufacturer(models.Model):
     model=models.CharField('Nombre',max_length=150)
     product_image=models.ImageField(null=True, blank=True, verbose_name=u'Imagen producto')
     manufacturer=models.ForeignKey(Manufacturer, on_delete=models.CASCADE, null=True, blank=True,verbose_name=u'Fabricante')
-
+    is_device=models.BooleanField(default=False,verbose_name=u'Es dispositivo' ,null=True, blank=True)
+    is_computer=models.BooleanField(default=False,verbose_name=u'Es computador' ,null=True, blank=True)
 
     def __str__(self):
         return self.model   
@@ -77,6 +81,8 @@ class PassiveDevices(models.Model):
     type_devices = models.ForeignKey(TypeDevices, on_delete=models.CASCADE, null=True, blank=True,verbose_name=u'Tipo dispositivo')
     serial_number=models.CharField('Número de serie',max_length=150, null=True, blank=True)
     manufacturer=models.ForeignKey(ModelManufacturer, on_delete=models.CASCADE, null=True, blank=True,verbose_name=u'Fabricante')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True,verbose_name=u'Asignación', default=1)
+
 
     def __str__(self):
         return self.name   
@@ -102,7 +108,9 @@ class Computers(models.Model):
     monitor_screen=models.IntegerField('Pantalla',blank=True,null=True)
     operative_system=models.CharField('Sistema Operativo',max_length=500,blank=True,null=True)
     description=models.TextField('Observaciones',max_length=5000,blank=True,null=True)
-
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True,verbose_name=u'Asignación',default=1)
+       
+    
     def __str__(self):
         return self.name   
 

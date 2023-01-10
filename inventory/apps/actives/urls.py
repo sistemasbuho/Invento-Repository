@@ -3,6 +3,7 @@ from .views import *
 
 urlpatterns = [
 
-	#Vistas de Ideas
-	# path('register/', registerIdea.as_view(), name='register'),
+	path('register/', registerComputer.as_view(), name='register'),
+ 	path('list/', ListComputers.as_view(), name='visualize'),
+
 ]
