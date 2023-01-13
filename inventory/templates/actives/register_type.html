@@ -1,0 +1,73 @@
+
+{% extends 'layouts/base.html' %}
+
+{% block title %} Registro {% endblock title %}
+
+{% block content %}
+
+<div class="header pb-6 d-flex align-items-center mb-5">
+  <!-- Mask -->
+  <!-- Header container -->
+  <div class="container-fluid d-flex align-items-center">
+    <div class="row">
+      <div class="col-lg-7 col-md-10">
+       
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Page content -->
+<div class="container mt--6">
+
+<div class="col-md-12 d-flex justify-content-center">
+
+  <div class=" card col-md-8 row">
+
+    <div class=" ">
+      <div class=" mx-auto">
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">Registro de Tipos Dispositivos </h3>
+            </div>
+            <div class="col-4 text-right">
+              {% comment %} <a href="#!" class="btn btn-sm btn-primary">Gregar</a> {% endcomment %}
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <form class="" method="POST"> {% csrf_token %}
+            <h6 class="heading-small mb-4">Datos Generales</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-name">{{form.name.label}}</label>
+                    {{form.name}}
+                  </div>
+                </div>
+
+        
+
+              </div>
+
+            
+            </div>
+
+            <button class="btn btn-primary btn-block col-md-8 container rounded-pill" type="submit"><i class="fas fa-paper-plane pr-2"></i>Agregar Tipo</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+  {% include "includes/footer.html" %}
+
+</div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}{% endblock javascripts %}

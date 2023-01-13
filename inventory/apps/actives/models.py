@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.html import mark_safe
 
 
 STATES=(
@@ -8,6 +9,12 @@ STATES=(
 	("Mantenimiento","Mantenimiento"),
 	("Dado de baja","Dado de baja"),
 	("Por definir","Por definir"),)
+
+TYPE_MANUFACTURER=(
+	("Para equipos","Para equipos"),
+    ("Para dispositivos","Para dispositivos"),
+    ("Ambos","Ambos"),
+)
 
 
 TYPE_MAINTENANCE=(
@@ -42,9 +49,7 @@ class TypeDevices(models.Model):
         
 class Manufacturer(models.Model):
     name=models.CharField('Nombre',max_length=150)
-    is_device=models.BooleanField(default=False,verbose_name=u'Es dispositivo' ,null=True, blank=True)
-    is_computer=models.BooleanField(default=False,verbose_name=u'Es computador' ,null=True, blank=True)
-
+    type_manufacturer=models.CharField(max_length=20, choices=TYPE_MANUFACTURER, verbose_name=u'Tipo de fabricante')
 
     def __str__(self):
         return self.name   
@@ -57,10 +62,11 @@ class Manufacturer(models.Model):
 class ModelManufacturer(models.Model):
     model=models.CharField('Nombre',max_length=150)
     product_image=models.ImageField(null=True, blank=True, verbose_name=u'Imagen producto')
-    manufacturer=models.ForeignKey(Manufacturer, on_delete=models.CASCADE, null=True, blank=True,verbose_name=u'Fabricante')
-    is_device=models.BooleanField(default=False,verbose_name=u'Es dispositivo' ,null=True, blank=True)
-    is_computer=models.BooleanField(default=False,verbose_name=u'Es computador' ,null=True, blank=True)
+    manufacturer=models.ForeignKey(Manufacturer, on_delete=models.CASCADE, verbose_name=u'Fabricante')
+    type_model=models.CharField(max_length=20, choices=TYPE_MANUFACTURER, verbose_name=u'Tipo de modelo')
+    
 
+    
     def __str__(self):
         return self.model   
 
@@ -80,7 +86,7 @@ class PassiveDevices(models.Model):
     location=models.CharField('Ubicación',max_length=150, null=True, blank=True)
     type_devices = models.ForeignKey(TypeDevices, on_delete=models.CASCADE, null=True, blank=True,verbose_name=u'Tipo dispositivo')
     serial_number=models.CharField('Número de serie',max_length=150, null=True, blank=True)
-    manufacturer=models.ForeignKey(ModelManufacturer, on_delete=models.CASCADE, null=True, blank=True,verbose_name=u'Fabricante')
+    manufacturer=models.ForeignKey(ModelManufacturer, on_delete=models.CASCADE, null=True, blank=True,verbose_name=u'Fabricante - Modelo')
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True,verbose_name=u'Asignación', default=1)
 
 
@@ -99,13 +105,13 @@ class Computers(models.Model):
     product_number=models.CharField('Número de producto',max_length=150)
     inventory_number=models.IntegerField('Número de inventario')
     serial_number=models.CharField('Número de serie',max_length=150)
-    manufacturer=models.ForeignKey(ModelManufacturer, on_delete=models.CASCADE, null=True, blank=True,verbose_name=u'Fabricante')
+    manufacturer=models.ForeignKey(ModelManufacturer, on_delete=models.CASCADE, null=True, blank=True,verbose_name=u'Fabricante - Modelo')
     state=models.CharField(max_length=20, choices=STATES, default="Por definir", blank=True,null=True,verbose_name=u'Estado')
     processor=models.CharField('Procesador',max_length=500,blank=True,null=True)
     ram_memory=models.CharField('Memoria RAM',max_length=500,blank=True,null=True)
     disk_memory=models.CharField('Disco Duro',max_length=500,blank=True,null=True)
     graphics=models.CharField('Tarjeta gráfica',max_length=500,blank=True,null=True)
-    monitor_screen=models.IntegerField('Pantalla',blank=True,null=True)
+    monitor_screen=models.CharField('Pantalla',blank=True,null=True,max_length=500,)
     operative_system=models.CharField('Sistema Operativo',max_length=500,blank=True,null=True)
     description=models.TextField('Observaciones',max_length=5000,blank=True,null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True,verbose_name=u'Asignación',default=1)

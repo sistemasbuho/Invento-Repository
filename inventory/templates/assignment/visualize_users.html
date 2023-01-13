@@ -1,6 +1,6 @@
 {% extends 'layouts/base.html' %}
 
-{% block title %} Lista Equipos {% endblock title %}
+{% block title %} Lista Usuarios {% endblock title %}
 
 {% block content %}
 
@@ -9,7 +9,7 @@
       <div class="header-body">
         <div class="row align-items-center py-4">
           <div class="col-lg-6 col-7">
-            <h6 class="h2 text-default d-inline-block mb-0"> Equipos de cómputo</h6>
+            <h6 class="h2 text-text-default d-inline-block mb-0"> Asignación de elementos</h6>
             {% comment %} <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
               <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                 <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
@@ -19,9 +19,9 @@
             </nav> {% endcomment %}
           </div>
           <div class="col-lg-6 col-5 text-right">
-            <a href="{% url 'actives:register' %}" class="btn btn-sm btn-neutral"> <i class="ni ni-laptop text-orange"></i> Registrar equipo</a>
-            <a href="{% url 'actives:register_model' %}" class="btn btn-sm btn-neutral"> <i class="ni ni-fat-add text-orange"></i> Agregar modelo</a>
-            <a href="{% url 'actives:register_manufacturer' %}" class="btn btn-sm btn-neutral"> <i class="ni ni-fat-add text-orange"></i> Agregar fabricante</a>
+            <a href="{% url 'users:assign_users' %}" class="btn btn-sm btn-neutral"><i class="ni ni-laptop pr-1 text-green"></i>Asignar elementos</a>
+            <a href="{% url 'users:register_users' %}" class="btn btn-sm btn-neutral"> <i class="ni ni-fat-add text-green"></i>Agregar usuario</a>
+           
             <a href="#" class="btn btn-sm btn-neutral">Filtros</a>
           </div>
         </div>
@@ -31,47 +31,44 @@
   
   <!-- Page content -->
   <div class="container-fluid mt--6">
-    <div class="card">
+    <div class="row">
       <div class="col">
-        <div class="">
+        <div class="card">
           <!-- Card header -->
           <div class="card-header border-0">
-            <h3 class="mb-0">Listado de equipos</h3>
+            <h3 class="mb-0">Listado de dispositivos</h3>
           </div>
           <!-- Light table -->
           <div class="table-responsive">
             <table class="table align-items-center table-flush">
               <thead class="thead-light">
                 <tr>
-                  <th scope="col" class="sort" data-sort="name">ID</th>
+                  <th scope="col" class="sort" data-sort="name">CC</th>
                   <th scope="col" class="sort" data-sort="budget">Nombre</th>
-                  <th scope="col" class="sort" data-sort="budget">Placa</th>
-                  <th scope="col" class="sort" data-sort="status">Estado</th>
-                  <th scope="col" class="sort" data-sort="status">Modelo</th>
-                  <th scope="col" class="sort" data-sort="status">Asignación</th>
+                  <th scope="col" class="sort" data-sort="status">Tipo asignación</th>
+                  <th scope="col" class="sort" data-sort="status">Correo</th>
+                  <th scope="col" class="sort" data-sort="status">Equipo</th>
                   <th scope="col" class="sort" data-sort="status">Acciones</th>
              
                 </tr>
               </thead>
               <tbody class="list">
-                {% for pc in computer_list %}
+                {% for user in users_list %}
                 <tr>
-                  <td scope="row"> {{pc.id}}</td>
-                  <td scope="row"> {{pc.name}}</td>
-                  <td scope="row"> {{pc.inventory_number}}</td>
-                  <td scope="row"> <span class="badge badge-success"> {{pc.state}} </span> </td>
-                  <td scope="row"> {{pc.manufacturer}}</td>
-                  <td scope="row"> {{pc.name}}</td>
+                  <td scope="row"> {{user.dni_user}}</td>
+                  <td scope="row"> {{user.name_user}}</td>
+                  <td scope="row"> <span class="badge badge-success"> {{user.type_assignment}} </span> </td>
+                  <td scope="row"> {{user.email_user}}</td>
+                  <td scope="row"> {{user.computer}}</td>
                   <td class="">
                     <div class="dropdown">
                       <a class="btn btn-sm " href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-ellipsis-v pr-1"></i> Acciones
                       </a>
                       <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                        <a class="dropdown-item" href="{% url 'actives:details_computer' pc.id %}"><i class="ni ni-tag text-orange"></i> Ver detalles</a>
+                        <a class="dropdown-item" href=""><i class="ni ni-tag text-orange"></i> Ver detalles</a>
                         <a class="dropdown-item" href="#"><i class="ni ni-settings text-primary"></i> Mantenimientos</a>
 
-                   
                       </div>
                     </div>
                   </td>

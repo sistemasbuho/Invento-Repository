@@ -74,7 +74,7 @@ body {
   line-height: 1.5;
   color: #525f7f;
   text-align: left;
-  background-color: #f8f9fe; }
+  background-color: #f1f1f1; }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important; }
@@ -10760,7 +10760,7 @@ a.text-darker:hover, a.text-darker:focus {
   transform: translateY(0); }
 
 .btn-sm, .btn-group-sm > .btn {
-  font-size: 0.75rem; }
+  font-size: 0.8rem; }
 
 .btn-lg, .btn-group-lg > .btn {
   font-size: 0.875rem; }
@@ -13860,9 +13860,10 @@ textarea[resize="horizontal"] {
 .table thead th {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
-  font-size: 0.65rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 1px;
+  font-weight: bolder;
   border-bottom: 1px solid #e9ecef; }
 
 .table th {
@@ -13969,11 +13970,13 @@ h1 > a, h2 > a, h3 > a, h4 > a, h5 > a, h6 > a {
   font-weight: 600; }
 
 .heading-small {
-  padding-top: .25rem;
-  padding-bottom: .25rem;
-  font-size: .75rem;
+  /* padding-top: .25rem;
+  padding-bottom: .25rem; */
+  font-size: .95rem;
   text-transform: uppercase;
-  letter-spacing: .04em; }
+  letter-spacing: .04em;
+  color: #5e72e4;
+ }
 
 .heading-title {
   letter-spacing: 0.025em;

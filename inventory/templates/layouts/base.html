@@ -34,6 +34,7 @@
   <!-- Page plugins -->
   <!-- Argon CSS -->
   <link rel="stylesheet" href="/static/assets/css/argon.css?v=1.2.0" type="text/css">
+  <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
 
   <!-- Specific CSS goes HERE -->
   {% block stylesheets %}{% endblock stylesheets %}
@@ -54,8 +55,33 @@
 
   {% include "includes/scripts.html" %}
 
-  <!-- Specific JS goes HERE --> 
-  {% block javascripts %}{% endblock javascripts %}
+  {% if messages %}
+  {% for message in messages %}
+    <script>
+        swal.fire(
+            {% if 'God Job' in message.extra_tags %}
+                "Bien hecho", //God Job
+                "{{message}}", //el Proyecto fue creado con éxito
+                "success" // icon
+                
+            {% elif 'Error' in message.extra_tags %}
+                "¡Error!",
+                "{{message}}",
+                "error"
+
+            {% else %}
+                {
+                    text: "{{message}}",
+                    icon: "{{message.tags}}",
+                }
+            {% endif %}
+            )
+    </script>
+    {% endfor %}
+    {% endif %}  {% block javascripts %}
+
+    
+  {% endblock javascripts %}
 
   <script src="/static/assets/js/argon.js?v=1.2.0"></script>
 

@@ -22,17 +22,16 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('actives/',include(('apps.actives.urls','actives'))),
+    path('users/', include(('apps.assignment.urls','users'))),        
     path("", include("apps.authentication.urls")), # Auth routes - login / register
     path("", include("apps.home.urls")),
-    path("users/", include("apps.assignment.urls")),        
     
 	#path('', ViewHome, name='home'),
 
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
-if settings.DEBUG:
-	urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 	# import debug_toolbar
 	# urlpatterns = [
 	# 	path('__debug__/', include(debug_toolbar.urls)),
