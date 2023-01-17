@@ -1,0 +1,167 @@
+
+{% extends 'layouts/base.html' %}
+
+{% block title %} Registro {% endblock title %}
+
+{% block content %}
+
+
+
+<div class="header pb-6 d-flex align-items-center mb-5">
+  <!-- Mask -->
+  <!-- Header container -->
+  <div class="container-fluid d-flex align-items-center">
+    <div class="row">
+      <div class="col-lg-7 col-md-10">
+       
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Page content -->
+<div class="container mt--6">
+
+<div class="col-md-12 d-flex justify-content-center">
+
+  <div class=" card col-md-11">
+
+    <div class=" ">
+      <div class=" mx-auto">
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">DETALLES USUARIO {{user_list.dni_user}}  </h3>
+            </div>
+            <div class="col-4 text-right">
+            <a href="#!" class="btn btn-sm btn-light">Editar </a> 
+            <a href="#!" class="btn btn-sm btn-info"> Re-asignar  </a> 
+            <a href="#!" class="btn btn-sm btn-info"> Generar acta </a> 
+
+          </div>
+        </div>
+      </div>
+        <div class="card-body">
+            
+            <div class="pl-lg-4">
+              <h6 class="heading-small mb-4 ">Datos Generales</h6>
+
+              <div class="row">
+
+                  <div class="col-md-5">
+                   <img src="https://www.focusedu.org/wp-content/uploads/2018/12/circled-user-male-skin-type-1-2.png" width="200" > 
+                  </div>
+
+                  <div class="col-md-7 row">
+
+           
+                     {% comment %} <div class="col-md-6">
+                      <label class="font-weight-bold"> Estado</label>
+                      <p>  
+                        {% if user_list.state == 'Activo asignado'  %}
+                        <a href="#!" class="btn btn-sm btn-success"> {{user_list.state}} </a> 
+                        {% elif user_list.state == 'Activo disponible'  %}
+                        <a href="#!" class="btn btn-sm btn-success"> {{user_list.state}} </a>
+                        {%elif user_list.state == 'Mantenimiento' %}
+                        <a href="#!" class="btn btn-sm btn-warning"> {{user_list.state}} </a> 
+                        {%elif user_list.state == 'Dado de baja' %}
+                        <a href="#!" class="btn btn-sm btn-danger"> {{user_list.state}} </a> 
+            
+                        {% endif %}
+                      </p>
+                     </div> {% endcomment %}
+
+                     <div class="col-md-6">
+                      <label class="font-weight-bold"> Nombre</label>
+                      <p>    {{user_list.assignment.name_user}}
+                       </p>
+                     </div>
+
+                     <div class="col-md-6">
+                      <label class="font-weight-bold"> Correo</label>
+                      <p>  {{user_list.assignment.email_user}}</p>
+                     </div>
+
+                     <div class="col-md-6">
+                      <label class="font-weight-bold"> Documento</label>
+                      <p>  {{user_list.assignment.dni_user}}</p>
+                     </div>
+
+                     <div class="col-md-6">
+                      <label class="font-weight-bold"> Fecha de última asignación</label>
+                      <p>  {{user_list.date_assignment}}</p>
+                     </div>
+
+                 
+
+
+            
+                  </div>
+  
+
+           
+            </div>
+            <hr class="my-4" />
+            <!-- Address -->
+            <h6 class="heading-small mb-4">Historial de asignaciones</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+
+                {% comment %} <div class="col-md-6">
+                  <label class="font-weight-bold"> Procesador</label>
+                  <p>  {{user_list.processor}}</p>
+                 </div>
+
+                 <div class="col-md-6">
+                  <label class="font-weight-bold"> Memoria RAM</label>
+                  <p>  {{user_list.ram_memory}}</p>
+                 </div>
+
+                 <div class="col-md-6">
+                  <label class="font-weight-bold"> Disco duro</label>
+                  <p>  {{user_list.disk_memory}}</p>
+                 </div>
+
+                 <div class="col-md-6">
+                  <label class="font-weight-bold"> Tarjeta gráfica</label>
+                  <p>  {{user_list.graphics}}</p>
+                 </div>
+
+                 <div class="col-md-6">
+                  <label class="font-weight-bold"> Pantalla</label>
+                  <p>  {{user_list.monitor_screen}}</p>
+                 </div>
+
+
+                 <div class="col-md-6">
+                  <label class="font-weight-bold"> Sistema operativo</label>
+                  <p>  {{user_list.operative_system}}</p>
+                 </div> {% endcomment %}
+
+
+
+              </div>
+           
+            </div>
+            <hr class="my-4" />
+            <!-- Description -->
+            <h6 class="heading-small mb-4">Detalles adicionales</h6>
+            <div class="col-md-12">
+              {% comment %} <label class="font-weight-bold"> Descripción</label>
+              <p>  {{user_list.description}}</p>
+             </div> {% endcomment %}
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+  {% include "includes/footer.html" %}
+
+</div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}{% endblock javascripts %}

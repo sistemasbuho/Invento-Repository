@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 class FormUserRegister(forms.ModelForm):
 	class Meta:
-		model = AssignUsers
+		model = UserData
 		fields=['name_user','email_user','dni_user','type_assignment']
   
 		widgets = {
@@ -45,7 +45,7 @@ class FormUserRegister(forms.ModelForm):
 class FormAssignRegister(forms.ModelForm):
 	class Meta:
 		model = AssignUsers
-		fields=['user','email_user','date_assignment','computers','passive_devices','type_assignment']
+		fields=['user','assignment','date_assignment','computers','passive_devices','type_assignment']
   
 		widgets = {
 			'user':forms.Select(
@@ -54,7 +54,7 @@ class FormAssignRegister(forms.ModelForm):
 					'id':'manufacturer', }),
    
       
-			'email_user':forms.Select(
+			'assignment':forms.Select(
 				attrs={
 					'class':'form-control',
 					'placeholder':'',
