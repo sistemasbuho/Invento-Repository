@@ -1,0 +1,175 @@
+
+{% extends 'layouts/base.html' %}
+
+{% block title %} Registro {% endblock title %}
+
+{% block content %}
+
+<div class="header pb-6 d-flex align-items-center mb-5">
+  <!-- Mask -->
+  <!-- Header container -->
+  <div class="container-fluid d-flex align-items-center">
+    <div class="row">
+      <div class="col-lg-7 col-md-10">
+       
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Page content -->
+<div class="container mt--6">
+
+<div class="col-md-12 d-flex justify-content-center">
+
+  <div class=" row">
+
+    <div class=" ">
+      <div class="card mx-auto">
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">Registro de equipos </h3>
+            </div>
+            <div class="col-4 text-right">
+              <a href="#!" class="btn btn-sm btn-light">Regresar</a> 
+              <a href="#!" class="btn btn-sm btn-info"> Agregar Mantenimiento </a> 
+
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <form class="" method="POST"> {% csrf_token %}
+            <h6 class="heading-small mb-4">Datos Generales</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-name">{{form.name.label}}</label>
+                    {{form.name}}
+                  </div>
+                </div>
+
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-state">{{form.state.label}}</label>
+                    {{form.state}}
+                  </div>
+                </div>
+
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-manufacturer">{{form.manufacturer.label}}</label>
+                    {{form.manufacturer}}
+                  </div>
+                </div>
+                
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-date_purchase">{{form.date_purchase.label}}</label>
+                    {{form.date_purchase}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-product_number">{{form.product_number.label}}</label>
+                    {{form.product_number}}
+                  </div>
+                </div>
+                
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-serial_number">{{form.serial_number.label}}</label>
+                    {{form.serial_number}}
+                  </div>
+                </div>
+
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-inventory_number">{{form.inventory_number.label}}</label>
+                    {{form.inventory_number}}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="my-4" />
+            <!-- Address -->
+            <h6 class="heading-small mb-4">detalles técnicos</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-processor">{{form.processor.label}}</label>
+                    {{form.processor}}
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-ram_memory">{{form.ram_memory.label}}</label>
+                    {{form.ram_memory}}
+                    </div>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-disk_memory">{{form.disk_memory.label}}</label>
+                    {{form.disk_memory}}
+                  </div>
+                </div>
+
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-graphics">{{form.graphics.label}}</label>
+                    {{form.graphics}}
+                  </div>
+                </div>
+
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-monitor_screen">{{form.monitor_screen.label}}</label>
+                    {{form.monitor_screen}}
+                  </div>
+                </div>
+
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-operative_system">{{form.operative_system.label}}</label>
+                    {{form.operative_system}}
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <hr class="my-4" />
+            <!-- Description -->
+            <h6 class="heading-small mb-4">Detalles adicionales</h6>
+            <div class="pl-lg-4">
+              <div class="form-group">
+                <label class="form-control-label">{{form.description.label}}</label>
+                {{form.description}}
+                </div>
+            </div>
+
+            <button class="btn btn-primary btn-block col-md-4 container rounded-pill" type="submit"><i class="fas fa-paper-plane pr-2"></i>Actualizar registro</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+  {% include "includes/footer.html" %}
+
+</div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}{% endblock javascripts %}

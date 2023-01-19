@@ -61,14 +61,14 @@ class Manufacturer(models.Model):
 
 class ModelManufacturer(models.Model):
     model=models.CharField('Nombre',max_length=150)
-    product_image=models.ImageField(null=True, blank=True, verbose_name=u'Imagen producto')
+    product_image=models.ImageField(upload_to="product_image",null=True, blank=True, verbose_name=u'Imagen producto')
     manufacturer=models.ForeignKey(Manufacturer, on_delete=models.CASCADE, verbose_name=u'Fabricante')
     type_model=models.CharField(max_length=20, choices=TYPE_MANUFACTURER, verbose_name=u'Tipo de modelo')
     
 
     
     def __str__(self):
-        return self.model   
+        return str('%s %s' % (self.manufacturer, self.model))  
 
     class Meta:
         verbose_name = "Modelo"
@@ -91,7 +91,8 @@ class PassiveDevices(models.Model):
 
 
     def __str__(self):
-        return self.name   
+        return str('%s %s' % (self.manufacturer, self.name))
+
 
     class Meta:
         verbose_name = "Dispositivo Pasivo"
@@ -137,14 +138,14 @@ class EquipmentMaintenance(models.Model):
     problem_description=models.TextField('Problema y condiciones iniciales',max_length=5000,blank=True,null=True)
     added_parts=models.TextField('Piezas añadidas',max_length=5000,blank=True,null=True)
     description=models.TextField('Observaciones',max_length=5000,blank=True,null=True)
-    priority=models.CharField(max_length=20, choices=PRIORITY, default="Por definir", blank=True,null=True,verbose_name=u'Estado Proceso')
+    priority=models.CharField(max_length=20, choices=PRIORITY, default="Por definir", blank=True,null=True,verbose_name=u'Prioridad')
     maintenance_state=models.CharField(max_length=20, choices=STATE_PROCESS, default="Pendiente", blank=True,null=True,verbose_name=u'Estado Proceso')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=u'Encargado',blank=True,null=True)
 
-    #encargado
 
 
     def __str__(self):
-        return self.start_maintenance   
+        return self.solution_description   
 
     class Meta:
         verbose_name = "Mantenimiento"

@@ -1,9 +1,5 @@
 from django import forms
 from .models import *
-from django.contrib.auth.models import User
-from django.contrib import messages
-from django.core.exceptions import ValidationError
-
 
 
 class FormComputerRegister(forms.ModelForm):
@@ -109,10 +105,10 @@ class FormComputerRegister(forms.ModelForm):
 	}
 
 	def clean_model(self):
-		inventory_number = self.cleaned_data["inventory_number"]
-		if Computers.objects.filter(inventory_number=inventory_number).exists():
-			raise forms.ValidationError('El registro %s ya existe' % inventory_number)    
-		return inventory_number
+		serial_number = self.cleaned_data["serial_number"]
+		if Computers.objects.filter(serial_number=serial_number).exists():
+			raise forms.ValidationError('El registro %s ya existe' % serial_number)    
+		return serial_number
 
         
 class FormManufacturerRegister(forms.ModelForm):
@@ -256,3 +252,89 @@ class FormTypesRegister(forms.ModelForm):
 		if TypeDevices.objects.filter(name=name).exists():
 			raise forms.ValidationError('El registro %s ya existe' % name)    
 		return name
+
+
+class FormMaintenanceRegister(forms.ModelForm):
+	class Meta:
+		model = EquipmentMaintenance
+		fields=['computer','maintenance_type','start_maintenance','end_maintenance','solution_description','problem_description','added_parts','description','priority','maintenance_state']
+  
+		widgets = {
+				'computer':forms.Select(
+				attrs={
+					'class':'form-control',
+					'placeholder':'',
+					'id':'computer' }),
+    
+    			'priority':forms.Select(
+				attrs={
+					'class':'form-control',
+					'placeholder':'',
+					'id':'priority' }),
+    
+    			'maintenance_state':forms.Select(
+				attrs={
+					'class':'form-control',
+					'placeholder':'',
+					'id':'maintenance_state' }),
+
+
+				'maintenance_type':forms.Select(
+							attrs={
+								'class':'form-control',
+								'placeholder':'Tipo de mantenimiento',
+								'id':'maintenance_type' }),
+    
+    			'user':forms.Select(
+							attrs={
+								'class':'form-control',
+								'placeholder':'',
+								'id':'user' }),
+     
+				
+    			'start_maintenance':forms.DateInput(
+							format=('%Y-%m-%d'),
+								attrs={
+								'class': 'form-control', 
+								'placeholder': 'yy-mm-dd',
+								'type': 'date'}),
+       
+				'end_maintenance':forms.DateInput(
+						format=('%Y-%m-%d'),
+							attrs={
+							'class': 'form-control', 
+							'placeholder': 'yy-mm-dd',
+							'type': 'date'}),
+    
+    			'description':forms.Textarea(
+				attrs={
+					'class':'form-control',
+					'placeholder':'Puede incluir cualquier otra característica: Rayones, defectos de fábrica, dispositivos incluidos, fallas incorregibles, etc',
+					'id':'description', 
+					'rows':5, 
+     			}),
+          
+                'solution_description':forms.Textarea(
+				attrs={
+					'class':'form-control',
+					'placeholder':'Describa de manera técnica, la solución dada al problema',
+					'id':'solution_description', 
+					'rows':5, 
+     			}),
+             
+                'problem_description':forms.Textarea(
+				attrs={
+					'class':'form-control',
+					'placeholder':'Describa el problema de manera técnica, en que condiciones recibe el equipo',
+					'id':'problem_description', 
+					'rows':5, 
+     			}),
+                
+                'added_parts':forms.Textarea(
+				attrs={
+					'class':'form-control',
+					'placeholder':'Incluya todas las piezas añadidas, cambiadas o removidas para este mantenimiento',
+					'id':'added_parts', 
+					'rows':5, 
+     			}),
+		}

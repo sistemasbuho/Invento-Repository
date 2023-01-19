@@ -1,3 +1,4 @@
+{% load static %}
 <!--
 =========================================================
 * Argon Dashboard - v1.2.0
@@ -25,17 +26,17 @@
   </title>
 
   <!-- Favicon - loaded as static -->
-  <link rel="icon" href="/static/assets/img/brand/favicon.png" type="image/png">
+  <link rel="icon" href="{% static '/assets/img/brand/favicon.png' %}" type="image/png">
   <!-- Fonts -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
   <!-- Icons -->
-  <link rel="stylesheet" href="/static/assets/vendor/nucleo/css/nucleo.css" type="text/css">
-  <link rel="stylesheet" href="/static/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
+  <link rel="stylesheet" href="{% static '/assets/vendor/nucleo/css/nucleo.css' %}" type="text/css">
+  <link rel="stylesheet" href="{% static '/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css' %}" type="text/css">
   <!-- Page plugins -->
   <!-- Argon CSS -->
-  <link rel="stylesheet" href="/static/assets/css/argon.css?v=1.2.0" type="text/css">
+  <link rel="stylesheet" href="{% static '/assets/css/argon.css' %}" type="text/css">
   <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
-  <link rel="stylesheet" href="/static/assets/vendor/datatables-bs4/css/dataTables.bootstrap4.css">
+  <link rel="stylesheet" href="{% static '/assets/vendor/datatables-bs4/css/dataTables.bootstrap4.css' %}">
 
   <!-- Specific CSS goes HERE -->
   {% block stylesheets %}{% endblock stylesheets %}
@@ -84,9 +85,9 @@
     
   {% endblock javascripts %}
 
-  <script src="/static/assets/js/argon.js?v=1.2.0"></script>
-  <script src="/static/assets/vendor/datatables/jquery.dataTables.js"></script>
-  <script src="/static/assets/vendor/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+  <script src="{% static '/assets/js/argon.js' %}"></script>
+  <script src="{% static '/assets/vendor/datatables/jquery.dataTables.js' %}"></script>
+  <script src="{% static '/assets/vendor/datatables-bs4/js/dataTables.bootstrap4.js' %}"></script>
   <script>
     $(function () {
       $("#example1").DataTable();

@@ -1,6 +1,7 @@
 
-{% extends 'layouts/base.html' %}
 
+{% extends 'layouts/base.html' %}
+{% load static %}
 {% block title %} Registro {% endblock title %}
 
 {% block content %}
@@ -24,17 +25,18 @@
 <div class="col-md-12 d-flex justify-content-center">
 
   <div class=" card col-md-11">
-
+ 
     <div class=" ">
       <div class=" mx-auto">
         <div class="card-header">
           <div class="row align-items-center">
             <div class="col-8">
-              <h3 class="mb-0">DETALLES EQUIPO {{computers_list.name}}  </h3>
+              {% for pcs in computer_list %}
+              <h3 class="mb-0">DETALLES EQUIPO {{pcs.name}}  </h3>
+              {% endfor %}
             </div>
             <div class="col-4 text-right">
-            <a href="#!" class="btn btn-sm btn-light">Editar </a> 
-            <a href="#!" class="btn btn-sm btn-info"> Agregar Mantenimiento </a> 
+            <a href="{% url 'actives:register_maintenance' %}" class="btn btn-sm btn-primary"> <i class="ni ni-settings text-orange"></i> Agregar mantenimiento</a>
           </div>
         </div>
       </div>
@@ -47,13 +49,14 @@
 
                   <div class="col-md-5">
                    <img src="https://http2.mlstatic.com/D_NQ_NP_954041-MLA46302470460_062021-V.jpg" > 
+                   <img src="{{computers_list.manufacturer.product_image.url}}" alt="My image">
                   </div>
-
+                  {{computers_list.manufacturer.product_image.url}}
                   <div class="col-md-7 row">
 
                     <div class="col-md-6">
                       <label class="font-weight-bold">Placa Inventario</label>
-                      <p>   <a href="#!" class="btn btn-sm btn-primary">PLACA {{computers_list.inventory_number}} </a></p>
+                      <p>   <a href="#!" class="btn btn-sm btn-primary">PLACA {{ratings}} </a></p>
                      </div>
 
          
@@ -141,18 +144,72 @@
                   <p>  {{computers_list.operative_system}}</p>
                  </div>
 
-
+                 <div class="col-md-12">
+                  <label class="font-weight-bold"> Descripción</label>
+                  <p>  {{computers_list.description}}</p>
+                 </div>
 
               </div>
            
             </div>
-            <hr class="my-4" />
+
+
+             <hr class="my-4" />
             <!-- Description -->
-            <h6 class="heading-small mb-4">Detalles adicionales</h6>
+            <h6 class="heading-small mb-4">Mantenimientos</h6>
             <div class="col-md-12">
-              <label class="font-weight-bold"> Descripción</label>
-              <p>  {{computers_list.description}}</p>
+              <div class="table-responsive">
+                {% comment %} <table id ="example1" class="table align-items-center table-flush dataTable"> {% endcomment %}
+                  <table id="example1" class="table  table-hover dataTable">
+    
+                  <thead class="thead-light">
+                    <tr>
+                      <th scope="col" class="sort" data-sort="name">Equipo</th>
+                      <th scope="col" class="sort" data-sort="budget">Tipo</th>
+                      <th scope="col" class="sort" data-sort="budget">Prioridad</th>
+                      <th scope="col" class="sort" data-sort="status">Estado</th>
+                      <th scope="col" class="sort" data-sort="status">Fecha inicio</th>
+                      <th scope="col" class="sort" data-sort="status">Fecha fin</th>
+                      <th scope="col" class="sort" data-sort="status">Acciones</th>
+                 
+                    </tr>
+                  </thead>
+                  <tbody class="list">
+                    
+                    <tr>
+                      <td scope="row"> {{maintenances}}</td>
+                      <td scope="row"> {{maintenances.maintenance_type}}</td>
+                      <td scope="row"> {{maintenances.priority}}</td>
+                      <td scope="row"> <span class="badge badge-success"> {{maintenances.maintenance_state}} </span> </td>
+                      <td scope="row"> {{maintenances.start_maintenance}}</td>
+                      <td scope="row"> {{maintenances.end_maintenance}}</td>
+                      <td class="">
+                        <div class="dropdown">
+                          <a class="btn btn-sm " href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v pr-1"></i> Acciones
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                            <a class="dropdown-item" href=" "><i class="ni ni-tag text-orange"></i> Editar</a>
+                            <a class="dropdown-item" href="#"><i class="ni ni-settings text-primary"></i> Mantenimientos</a>
+    
+                       
+                          </div>
+                        </div>
+                      </td>
+    
+                    </tr>
+                   
+         
+                    
+           
+                   
+              
+                  </tbody>
+                </table>
+              </div>
+
              </div>
+
 
         </div>
       </div>

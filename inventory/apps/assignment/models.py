@@ -14,10 +14,10 @@ TYPE_ASSIGNMENT=(
 
 class UserData(models.Model):
     creation_date=models.DateField(auto_now_add=True,verbose_name=u'Fecha de registro')
-    name_user=models.CharField('Nombre completo',max_length=150,blank=True,null=True)
-    email_user=models.CharField('Correo corporativo',max_length=150,blank=True,null=True)
-    dni_user=models.IntegerField('Documento de Identidad',blank=True,null=True)
-    type_assignment=models.CharField(max_length=20, choices=TYPE_ASSIGNMENT, default="Por definir", blank=True,null=True,verbose_name=u'Tipo asignación')
+    name_user=models.CharField('Nombre completo',max_length=150)
+    email_user=models.CharField('Correo corporativo',max_length=150)
+    dni_user=models.IntegerField('Documento de Identidad')
+    type_assignment=models.CharField(max_length=20, choices=TYPE_ASSIGNMENT, default="Por definir",verbose_name=u'Tipo asignación')
 
     def __str__(self):
         return self.email_user
@@ -29,15 +29,13 @@ class UserData(models.Model):
         
 class AssignUsers(models.Model):
     creation_date=models.DateField(auto_now_add=True,verbose_name=u'Fecha de registro')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=u'Encargado',blank=True,null=True)
-    assignment= models.ForeignKey(UserData, on_delete=models.CASCADE, verbose_name=u'Encargado',blank=True,null=True)
-    date_assignment=models.DateField(verbose_name=u'Fecha de asignación',blank=True,null=True)
-    computers=models.ForeignKey(Computers, on_delete=models.CASCADE, null=True, blank=True,verbose_name=u'Equipo asignado')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=u'Encargado')
+    assignment= models.ForeignKey(UserData, on_delete=models.CASCADE, verbose_name=u'Encargado')
+    date_assignment=models.DateField(verbose_name=u'Fecha de asignación')
+    computers=models.ForeignKey(Computers, on_delete=models.CASCADE, verbose_name=u'Equipo asignado')
     passive_devices=models.ManyToManyField(PassiveDevices, verbose_name=u'Dispositivos asignados')
-    type_assignment=models.CharField(max_length=20, choices=TYPE_ASSIGNMENT, default="Por definir", blank=True,null=True,verbose_name=u'Tipo asignación')
+    type_assignment=models.CharField(max_length=20, choices=TYPE_ASSIGNMENT, default="Por definir",verbose_name=u'Tipo asignación')
 
-    def __str__(self):
-        return self.assignment
     
     class Meta:
         verbose_name = "Asignación Usuario"

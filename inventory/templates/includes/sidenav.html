@@ -1,9 +1,10 @@
+{% load static %}
 <nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
   <div class="scrollbar-inner">
     <!-- Brand -->
     <div class="sidenav-header  align-items-center">
       <a class="navbar-brand" href="/">
-        <img src="/static/assets/img/brand/blue.png" class="navbar-brand-img" alt="Argon Design - Jinja Template Logo.">
+        <img src="{% static '/assets/img/brand/blue.png' %}" class="navbar-brand-img" alt="Argon Design - Jinja Template Logo.">
       </a>
     </div>
     <div class="navbar-inner">
@@ -34,10 +35,18 @@
 
           <li class="nav-item">
             <a class="nav-link {% if 'icons' in segment %} active {% endif %}" href="{% url 'actives:visualize_devices' %}">
-              <i class="ni ni-tablet-button text-primary"></i>
+              <i class="ni ni-headphones text-primary"></i>
               <span class="nav-link-text">Dispositivos</span>
             </a>
           </li>
+
+          <li class="nav-item">
+            <a class="nav-link {% if 'icons' in segment %} active {% endif %}" href="{% url 'actives:visualize_devices' %}">
+              <i class="ni ni-tablet-button text-primary"></i>
+              <span class="nav-link-text">Monitores</span>
+            </a>
+          </li>
+
 
           <li class="nav-item">
             <a class="nav-link {% if 'map' in segment %} active {% endif %}" href="{% url 'users:visualize_users' %}">
@@ -45,7 +54,6 @@
               <span class="nav-link-text">Usuarios</span>
             </a>
           </li>
-
 
 
         </ul>
@@ -60,6 +68,13 @@
         <ul class="navbar-nav mb-md-3">
 
           <li class="nav-item">
+            <a class="nav-link {% if 'icons' in segment %} active {% endif %}" href="{% url 'actives:visualize_maintenance' %}">
+              <i class="ni ni-settings text-primary"></i>
+              <span class="nav-link-text">Mantenimientos</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
             <a class="nav-link {% if 'map' in segment %} active {% endif %}" href="">
               <i class="ni ni-bag-17 text-primary"></i>
               <span class="nav-link-text">Banco Inactivos</span>
@@ -68,7 +83,7 @@
 
 
           <li class="nav-item">
-            <a class="nav-link {% if 'map' in segment %} active {% endif %}" href="">
+            <a href="/admin/" class="nav-link"  target="_blank">
               <i class="ni ni-settings-gear-65 text-primary"></i>
               <span class="nav-link-text">Administrador</span>
             </a>
@@ -80,6 +95,7 @@
               <span class="nav-link-text">Icons</span>
             </a>
           </li>
+
           
         </ul>
 

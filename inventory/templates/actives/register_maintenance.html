@@ -1,0 +1,139 @@
+
+{% extends 'layouts/base.html' %}
+
+{% block title %} Registro {% endblock title %}
+
+{% block content %}
+
+<div class="header pb-6 d-flex align-items-center mb-5">
+  <!-- Mask -->
+  <!-- Header container -->
+  <div class="container-fluid d-flex align-items-center">
+    <div class="row">
+      <div class="col-lg-7 col-md-10">
+       
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Page content -->
+<div class="container mt--6">
+
+<div class="col-md-12 d-flex justify-content-center">
+
+  <div class=" card col-md-11">
+
+    <div class=" ">
+      <div class=" mx-auto">
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">Registro de Mantenimientos </h3>
+            </div>
+            <div class="col-4 text-right">
+              {% comment %} <a href="#!" class="btn btn-sm btn-primary">Settings</a> {% endcomment %}
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <form class="" method="POST"> {% csrf_token %}
+            <h6 class="heading-small mb-4">Datos Generales</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-name">{{form.computer.label}}</label>
+                    {{form.computer}}
+                  </div>
+                </div>
+
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-maintenance_type">{{form.maintenance_type.label}}</label>
+                    {{form.maintenance_type}}
+                  </div>
+                </div>
+
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-priority">{{form.priority.label}}</label>
+                    {{form.priority}}
+                  </div>
+                </div>
+                
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-maintenance_state">{{form.maintenance_state.label}}</label>
+                    {{form.maintenance_state}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-start_maintenance">{{form.start_maintenance.label}}</label>
+                    {{form.start_maintenance}}
+                  </div>
+                </div>
+                
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-end_maintenance">{{form.end_maintenance.label}}</label>
+                    {{form.end_maintenance}}
+                  </div>
+                </div>
+
+              </div>
+            </div>
+         
+            <hr class="my-4" />
+            <!-- Description -->
+            <h6 class="heading-small mb-4">Detalles Técnicos</h6>
+      
+            <div class="pl-lg-4">
+                <div class="form-group">
+                  <label class="form-control-label">{{form.problem_description.label}}</label>
+                  {{form.problem_description}}
+                  </div>
+              </div>
+
+              <div class="pl-lg-4">
+                <div class="form-group">
+                  <label class="form-control-label">{{form.solution_description.label}}</label>
+                  {{form.solution_description}}
+                  </div>
+              </div>
+
+              <div class="pl-lg-4">
+                <div class="form-group">
+                  <label class="form-control-label">{{form.added_parts.label}}</label>
+                  {{form.added_parts}}
+                  </div>
+              </div>
+
+              <div class="pl-lg-4">
+                <div class="form-group">
+                  <label class="form-control-label">{{form.description.label}}</label>
+                  {{form.description}}
+                  </div>
+              </div>
+
+            <button class="btn btn-primary btn-block col-md-4 container rounded-pill" type="submit"><i class="fas fa-paper-plane pr-2"></i>Ingresar registro</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+  {% include "includes/footer.html" %}
+
+</div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}{% endblock javascripts %}

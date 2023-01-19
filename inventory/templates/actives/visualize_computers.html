@@ -60,9 +60,21 @@
                 {% for pc in computer_list %}
                 <tr>
                   <td scope="row"> {{pc.id}}</td>
-                  <td scope="row"> {{pc.name}}</td>
+                  <td scope="row">  <a href="{% url 'actives:details_computer' pc.id %}" class="font-weight-bold"> {{pc.name}} </a>   </td>
                   <td scope="row"> {{pc.inventory_number}}</td>
-                  <td scope="row"> <span class="badge badge-success"> {{pc.state}} </span> </td>
+                  <td scope="row"> 
+                    {% if pc.state == 'Activo asignado'  %}
+                    <span class="badge badge-primary"> {{pc.state}} </span> 
+                    {% elif pc.state == 'Activo disponible'  %}
+                    <span class="badge badge-success"> {{pc.state}} </span>
+                    {%elif pc.state == 'Mantenimiento' %}
+                    <span class="badge badge-warning"> {{pc.state}} </span> 
+                    {%elif pc.state == 'Dado de baja' %}
+                    <span class="badge badge-danger"> {{pc.state}} </span> 
+        
+                    {% endif %}
+                   </td>
+                   
                   <td scope="row"> {{pc.manufacturer}}</td>
                   <td scope="row"> {{pc.serial_number}}</td>
                   <td class="">

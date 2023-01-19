@@ -1,14 +1,13 @@
 
 from django.shortcuts import redirect, render
 from django.contrib import messages
-from django.views.generic import ListView , CreateView, View
+from django.views.generic import ListView , CreateView, UpdateView
 from django.views.generic.detail import DetailView
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy,reverse
 from .models import *
 from .forms import *
 from django.shortcuts import get_object_or_404
-
 
 # Clase privada de la que heredan todas las vistas-----------------------------------		
 class _FormValid(PermissionRequiredMixin):
@@ -89,7 +88,14 @@ class registerModel(registerComputer):
 	template_name = 'actives/register_model.html'
 	success_url = reverse_lazy('actives:register_model')
 
-
+class registerMaintenance(registerComputer):
+	model = EquipmentMaintenance
+	# permission_required = 'idea.add_idea'
+	form_class = FormMaintenanceRegister
+	template_name = 'actives/register_maintenance.html'
+	success_url = reverse_lazy('actives:register_maintenance')
+ 
+ 
 class registerTypes(registerComputer):
 	model = TypeDevices
 	# permission_required = 'idea.add_idea'
@@ -112,6 +118,12 @@ class ListDevices(ListView):
 	queryset = PassiveDevices.objects.all()
 
 
+class ListMaintenance(ListView):
+	model = EquipmentMaintenance
+	template_name = 'actives/visualize_maintenance.html'
+	context_object_name = 'devices_list'  
+	queryset = EquipmentMaintenance.objects.all()
+
     
 class ComputersDetailView(DetailView):
 	model = Computers
@@ -124,3 +136,33 @@ class ComputersDetailView(DetailView):
 		book = get_object_or_404(Computers, pk=kwargs['pk'])
 		context = {'computers_list': book}
 		return render(request, 'actives/details_pc.html', context)
+
+
+
+
+class UpdateComputer(_FormValid,UpdateView):
+	model = Computers
+	template_name = 'actives/update_computer.html'
+	context_object_name = 'computer_list'
+	form_class = FormComputerRegister  
+	queryset = Computers.objects.all()
+	success_message = '¡El registro fue actualizado correctamente!'
+	error_message = 'No se actualizó el registro'
+ 
+	def get_success_url(self):
+		pk = self.kwargs["pk"]
+		return reverse("actives:update_computer", kwargs={"pk": pk})
+
+
+class UpdateDevice(_FormValid,UpdateView):
+	model = PassiveDevices
+	template_name = 'actives/update_device.html'
+	context_object_name = 'devices_list'
+	form_class = FormDevicesRegister  
+	queryset = PassiveDevices.objects.all()
+	success_message = '¡El registro fue actualizado correctamente!'
+	error_message = 'No se actualizó el registro'
+ 
+	def get_success_url(self):
+		pk = self.kwargs["pk"]
+		return reverse("actives:update_device", kwargs={"pk": pk})

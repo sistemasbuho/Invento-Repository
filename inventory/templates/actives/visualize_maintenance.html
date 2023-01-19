@@ -1,0 +1,106 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Lista Equipos {% endblock title %}
+
+{% block content %}
+
+
+
+  <div class="header pb-6">
+    <div class="container-fluid">
+      <div class="header-body">
+        <div class="row align-items-center py-4">
+          <div class="col-lg-6 col-7">
+            <h6 class="h2 text-default d-inline-block mb-0"> Equipos de cómputo</h6>
+            {% comment %} <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+              <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                <li class="breadcrumb-item"><a href="#">Tables</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Tables</li>
+              </ol>
+            </nav> {% endcomment %}
+          </div>
+          <div class="col-lg-6 col-5 text-right">
+            <a href="{% url 'actives:register_maintenance' %}" class="btn btn-sm btn-neutral"> <i class="ni ni-settings text-orange"></i> Agregar mantenimiento</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Page content -->
+  <div class="container-fluid mt--6">
+    <div class="card">
+      <div class="col">
+        <div class="">
+          <!-- Card header -->
+          <div class="card-header border-0">
+            <h3 class="mb-0">Listado de Mantenimientos</h3>
+          </div>
+          <!-- Light table -->
+          <div class="table-responsive">
+            {% comment %} <table id ="example1" class="table align-items-center table-flush dataTable"> {% endcomment %}
+              <table id="example1" class="table  table-hover dataTable">
+
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col" class="sort" data-sort="name">Equipo</th>
+                  <th scope="col" class="sort" data-sort="budget">Tipo</th>
+                  <th scope="col" class="sort" data-sort="budget">Prioridad</th>
+                  <th scope="col" class="sort" data-sort="status">Estado</th>
+                  <th scope="col" class="sort" data-sort="status">Fecha inicio</th>
+                  <th scope="col" class="sort" data-sort="status">Fecha fin</th>
+                  <th scope="col" class="sort" data-sort="status">Acciones</th>
+             
+                </tr>
+              </thead>
+              <tbody class="list">
+                {% for pc in devices_list %}
+                <tr>
+                  <td scope="row"> {{pc.computer}}</td>
+                  <td scope="row"> {{pc.maintenance_type}}</td>
+                  <td scope="row"> {{pc.priority}}</td>
+                  <td scope="row"> <span class="badge badge-success"> {{pc.maintenance_state}} </span> </td>
+                  <td scope="row"> {{pc.start_maintenance}}</td>
+                  <td scope="row"> {{pc.end_maintenance}}</td>
+                  <td class="">
+                    <div class="dropdown">
+                      <a class="btn btn-sm " href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v pr-1"></i> Acciones
+                      </a>
+                      <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                        <a class="dropdown-item" href="{% url 'actives:details_computer' pc.id %}"><i class="ni ni-tag text-orange"></i> Editar</a>
+                        <a class="dropdown-item" href="#"><i class="ni ni-settings text-primary"></i> Mantenimientos</a>
+
+                   
+                      </div>
+                    </div>
+                  </td>
+
+                </tr>
+                  {% endfor %}
+     
+                
+       
+               
+          
+              </tbody>
+            </table>
+          </div>
+          <!-- Card footer -->
+          <div class="card-footer py-4">
+  
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    {% include "includes/footer.html" %}
+
+  </div>
+
+{% endblock content %}
+
+
+{% block javascripts %}{% endblock javascripts %}
