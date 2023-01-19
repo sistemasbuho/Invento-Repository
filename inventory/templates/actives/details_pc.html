@@ -30,13 +30,13 @@
       <div class=" mx-auto">
         <div class="card-header">
           <div class="row align-items-center">
-            <div class="col-8">
-              {% for pcs in computer_list %}
-              <h3 class="mb-0">DETALLES EQUIPO {{pcs.name}}  </h3>
-              {% endfor %}
+            <div class="col-6">
+              {% for computers_list in second_queryset %}
+              <h3 class="mb-0">DETALLES EQUIPO {{computers_list.name}}  </h3>
             </div>
-            <div class="col-4 text-right">
-            <a href="{% url 'actives:register_maintenance' %}" class="btn btn-sm btn-primary"> <i class="ni ni-settings text-orange"></i> Agregar mantenimiento</a>
+            <div class="col-6 text-right">
+              <a href="{% url 'actives:update_computer' computers_list.id %}" class="btn btn-sm btn-light"> Editar</a>
+            <a href="{% url 'actives:register_maintenance' %}" class="btn btn-sm btn-info"> <i class="ni ni-settings text-orange"></i> Agregar mantenimiento</a>
           </div>
         </div>
       </div>
@@ -51,12 +51,11 @@
                    <img src="https://http2.mlstatic.com/D_NQ_NP_954041-MLA46302470460_062021-V.jpg" > 
                    <img src="{{computers_list.manufacturer.product_image.url}}" alt="My image">
                   </div>
-                  {{computers_list.manufacturer.product_image.url}}
                   <div class="col-md-7 row">
 
                     <div class="col-md-6">
                       <label class="font-weight-bold">Placa Inventario</label>
-                      <p>   <a href="#!" class="btn btn-sm btn-primary">PLACA {{ratings}} </a></p>
+                      <p>   <a href="#!" class="btn btn-sm btn-primary">PLACA {{computers_list.inventory_number}} </a></p>
                      </div>
 
          
@@ -79,8 +78,8 @@
 
                      <div class="col-md-6">
                       <label class="font-weight-bold"> Modelo</label>
-                      <p>    {{computers_list.manufacturer.manufacturer}}
-                        {{computers_list.manufacturer}}</p>
+                      <p>   {{computers_list.manufacturer}}</p>
+                     
                      </div>
 
                      <div class="col-md-6">
@@ -153,6 +152,7 @@
            
             </div>
 
+            {% endfor %}
 
              <hr class="my-4" />
             <!-- Description -->
@@ -175,7 +175,8 @@
                     </tr>
                   </thead>
                   <tbody class="list">
-                    
+                    {% for maintenances in third_queryset %}
+
                     <tr>
                       <td scope="row"> {{maintenances}}</td>
                       <td scope="row"> {{maintenances.maintenance_type}}</td>
@@ -191,15 +192,12 @@
                           <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                             <a class="dropdown-item" href=" "><i class="ni ni-tag text-orange"></i> Editar</a>
                             <a class="dropdown-item" href="#"><i class="ni ni-settings text-primary"></i> Mantenimientos</a>
-    
-                       
                           </div>
                         </div>
                       </td>
-    
                     </tr>
                    
-         
+                    {% endfor %}
                     
            
                    

@@ -1,0 +1,186 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %} Registro {% endblock title %}
+
+{% block content %}
+
+
+
+<div class="header pb-6 d-flex align-items-center mb-5">
+  <!-- Mask -->
+  <!-- Header container -->
+  <div class="container-fluid d-flex align-items-center">
+    <div class="row">
+      <div class="col-lg-7 col-md-10">
+       
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Page content -->
+<div class="container mt--6">
+
+<div class="col-md-12 d-flex justify-content-center">
+
+  <div class=" card col-md-11">
+ 
+    <div class=" ">
+      <div class=" mx-auto">
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col-6">
+              {% for computers_list in second_queryset %}
+              <h3 class="mb-0">DETALLES DISPOSITIVO {{computers_list.name}}  </h3>
+            </div>
+            <div class="col-6 text-right">
+              <a href="{% url 'actives:update_computer' computers_list.id %}" class="btn btn-sm btn-light"> Editar</a>
+            <a href="{% url 'actives:register_maintenance' %}" class="btn btn-sm btn-info"> <i class="ni ni-settings "></i> Agregar mantenimiento</a>
+          </div>
+        </div>
+      </div>
+        <div class="card-body">
+            
+            <div class="pl-lg-4">
+              <h6 class="heading-small mb-4 ">Datos Generales</h6>
+
+              <div class="row">
+
+                  <div class="col-md-5">
+                   <img src="https://resource.logitech.com/w_800,c_lpad,ar_16:9,q_auto,f_auto,dpr_1.0/d_transparent.gif/content/dam/logitech/en/products/combos/mk295-keyboard-mouse-combo/gallery/mk295-graphite-gallery-01-new.png?v=1" width="300" > 
+                  </div>
+
+                  <div class="col-md-7 row">
+
+                    <div class="col-md-6">
+                      <label class="font-weight-bold">Placa Inventario</label>
+                      <p>   <a href="#!" class="btn btn-sm btn-primary">PLACA {{computers_list.inventory_number}} </a></p>
+                     </div>
+
+         
+   
+                     <div class="col-md-6">
+                      <label class="font-weight-bold"> Estado</label>
+                      <p>  
+                        {% if computers_list.state == 'Activo asignado'  %}
+                        <a href="#!" class="btn btn-sm btn-success"> {{computers_list.state}} </a> 
+                        {% elif computers_list.state == 'Activo disponible'  %}
+                        <a href="#!" class="btn btn-sm btn-success"> {{computers_list.state}} </a>
+                        {%elif computers_list.state == 'Mantenimiento' %}
+                        <a href="#!" class="btn btn-sm btn-warning"> {{computers_list.state}} </a> 
+                        {%elif computers_list.state == 'Dado de baja' %}
+                        <a href="#!" class="btn btn-sm btn-danger"> {{computers_list.state}} </a> 
+            
+                        {% endif %}
+                      </p>
+                     </div>
+
+                     <div class="col-md-6">
+                      <label class="font-weight-bold"> Modelo</label>
+                      <p>   {{computers_list.manufacturer}}</p>
+                     
+                     </div>
+
+                     <div class="col-md-6">
+                      <label class="font-weight-bold"> Número de serie</label>
+                      <p>  {{computers_list.serial_number}}</p>
+                     </div>
+
+                     <div class="col-md-6">
+                      <label class="font-weight-bold"> Tipo dispositivo</label>
+                      <p>  {{computers_list.type_devices}}</p>
+                     </div>
+
+                     <div class="col-md-6">
+                      <label class="font-weight-bold"> Fecha de compra</label>
+                      <p>  {{computers_list.date_purchase}}</p>
+                     </div>
+
+                     <div class="col-md-6">
+                        <label class="font-weight-bold"> Ubicación</label>
+                        <p>  {{computers_list.location}}</p>
+                       </div>
+  
+              
+
+            
+                  </div>
+
+            </div>
+
+            <div class="col-md-12">
+                <label class="font-weight-bold"> Descripción</label>
+                <p>  {{computers_list.description}}</p>
+               </div>
+
+            {% endfor %}
+
+             <hr class="my-4" />
+            <!-- Description -->
+            <h6 class="heading-small mb-4">Mantenimientos</h6>
+            <div class="col-md-12">
+              <div class="table-responsive">
+                {% comment %} <table id ="example1" class="table align-items-center table-flush dataTable"> {% endcomment %}
+                  <table id="example1" class="table  table-hover dataTable">
+    
+                  <thead class="thead-light">
+                    <tr>
+                      <th scope="col" class="sort" data-sort="name">Equipo</th>
+                      <th scope="col" class="sort" data-sort="budget">Tipo</th>
+                      <th scope="col" class="sort" data-sort="budget">Prioridad</th>
+                      <th scope="col" class="sort" data-sort="status">Estado</th>
+                      <th scope="col" class="sort" data-sort="status">Fecha inicio</th>
+                      <th scope="col" class="sort" data-sort="status">Fecha fin</th>
+                      <th scope="col" class="sort" data-sort="status">Acciones</th>
+                 
+                    </tr>
+                  </thead>
+                  <tbody class="list">
+                    {% for maintenances in third_queryset %}
+
+                    <tr>
+                      <td scope="row"> {{maintenances}}</td>
+                      <td scope="row"> {{maintenances.maintenance_type}}</td>
+                      <td scope="row"> {{maintenances.priority}}</td>
+                      <td scope="row"> <span class="badge badge-success"> {{maintenances.maintenance_state}} </span> </td>
+                      <td scope="row"> {{maintenances.start_maintenance}}</td>
+                      <td scope="row"> {{maintenances.end_maintenance}}</td>
+                      <td class="">
+                        <div class="dropdown">
+                          <a class="btn btn-sm " href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v pr-1"></i> Acciones
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                            <a class="dropdown-item" href=" "><i class="ni ni-tag text-orange"></i> Editar</a>
+                            <a class="dropdown-item" href="#"><i class="ni ni-settings text-primary"></i> Mantenimientos</a>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                   
+                    {% endfor %}
+                    
+           
+                   
+              
+                  </tbody>
+                </table>
+              </div>
+
+             </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+  {% include "includes/footer.html" %}
+
+</div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}{% endblock javascripts %}

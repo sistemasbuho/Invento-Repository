@@ -28,14 +28,9 @@ urlpatterns = [
     
 	#path('', ViewHome, name='home'),
 
-]+ static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)
+]
+# + static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)
 
-
-
-	# import debug_toolbar
-	# urlpatterns = [
-	# 	path('__debug__/', include(debug_toolbar.urls)),
-	#] + urlpatterns    
 
 admin.site.site_header = "Administrador de Invento"
 admin.site.site_title = "Administración de Invento"

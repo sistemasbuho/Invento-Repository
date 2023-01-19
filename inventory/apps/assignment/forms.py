@@ -45,7 +45,40 @@ class FormUserRegister(forms.ModelForm):
 class FormAssignRegister(forms.ModelForm):
 	class Meta:
 		model = AssignUsers
-		fields=['user','assignment','date_assignment','computers','passive_devices','type_assignment']
+		fields=['user','assignment','date_assignment','computers','passive_devices']
+  
+		widgets = {
+			'user':forms.Select(
+				attrs={
+					'class':'form-control',
+					'id':'manufacturer', }),
+   
+      
+			'assignment':forms.Select(
+				attrs={
+					'class':'form-control',
+					'placeholder':'',
+					'id':'email_user' }),
+   
+		    'date_assignment':forms.DateInput(
+				format=('%Y-%m-%d'),
+       		 	attrs={
+               'class': 'form-control', 
+               'placeholder': 'yy-mm-dd',
+               'type': 'date'}),
+            
+            'computers':forms.Select(
+				attrs={
+					'class':'form-control',
+					'id':'computers', }),
+            
+        }
+  
+  
+class FormAssignUpdate(forms.ModelForm):
+	class Meta:
+		model = AssignUsers
+		fields=['user','assignment','date_assignment','computers','passive_devices']
   
 		widgets = {
 			'user':forms.Select(

@@ -148,10 +148,33 @@ class EquipmentMaintenance(models.Model):
         return self.solution_description   
 
     class Meta:
-        verbose_name = "Mantenimiento"
-        verbose_name_plural = "Mantenimientos"
+        verbose_name = "Mantenimiento Equipo"
+        verbose_name_plural = "Mantenimientos Equipos"
         
 
+class DevicesMaintenance(models.Model):
+    creation_date=models.DateField(auto_now_add=True,verbose_name=u'Fecha de registro')
+    device=models.ForeignKey(PassiveDevices, on_delete=models.CASCADE, null=True, blank=True,verbose_name=u'Computador')
+    maintenance_type=models.CharField(max_length=20, choices=TYPE_MAINTENANCE, default="Por definir", blank=True,null=True,verbose_name=u'Tipo Proceso')
+    start_maintenance=models.DateField(verbose_name=u'Fecha de inicio mantenimiento',blank=True,null=True)
+    end_maintenance=models.DateField(verbose_name=u'Fecha de fin mantenimiento',blank=True,null=True)
+    solution_description=models.TextField('Mantenimiento y solución',max_length=5000,blank=True,null=True)
+    problem_description=models.TextField('Problema y condiciones iniciales',max_length=5000,blank=True,null=True)
+    added_parts=models.TextField('Piezas añadidas',max_length=5000,blank=True,null=True)
+    description=models.TextField('Observaciones',max_length=5000,blank=True,null=True)
+    priority=models.CharField(max_length=20, choices=PRIORITY, default="Por definir", blank=True,null=True,verbose_name=u'Prioridad')
+    maintenance_state=models.CharField(max_length=20, choices=STATE_PROCESS, default="Pendiente", blank=True,null=True,verbose_name=u'Estado Proceso')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=u'Encargado',blank=True,null=True)
+
+
+
+    def __str__(self):
+        return self.solution_description   
+
+    class Meta:
+        verbose_name = "Mantenimiento Dispositivo"
+        verbose_name_plural = "Mantenimientos Dispositivos"
+        
 
 class Monitors(models.Model):
     creation_date=models.DateField(auto_now_add=True,verbose_name=u'Fecha de registro')
@@ -163,6 +186,9 @@ class Monitors(models.Model):
     manufacturer=models.ForeignKey(ModelManufacturer, on_delete=models.CASCADE, null=True, blank=True,verbose_name=u'Fabricante')
     state=models.CharField(max_length=20, choices=STATES, default="Por definir", blank=True,null=True,verbose_name=u'Estado')
     description=models.TextField('Observaciones',max_length=5000,blank=True,null=True)
+    screen=models.IntegerField('Pulgadas',default="18")
+
+    
     #encargado
 
 

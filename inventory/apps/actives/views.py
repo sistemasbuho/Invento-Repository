@@ -8,6 +8,8 @@ from django.urls import reverse_lazy,reverse
 from .models import *
 from .forms import *
 from django.shortcuts import get_object_or_404
+from apps.assignment.models import AssignUsers
+
 
 # Clase privada de la que heredan todas las vistas-----------------------------------		
 class _FormValid(PermissionRequiredMixin):
@@ -80,6 +82,12 @@ class registerManufacturer(registerComputer):
 	template_name = 'actives/register_manufacturer.html'
 	success_url = reverse_lazy('actives:register_manufacturer')
 
+class registerMonitor(registerComputer):
+	model = Monitors
+	# permission_required = 'idea.add_idea'
+	form_class = FormMonitorRegister
+	template_name = 'actives/register_monitor.html'
+	success_url = reverse_lazy('actives:visualize_monitors')
  
 class registerModel(registerComputer):
 	model = ModelManufacturer
@@ -110,6 +118,11 @@ class ListComputers(ListView):
 	context_object_name = 'computer_list'  
 	queryset = Computers.objects.all()
 
+class ListMonitors(ListView):
+	model = Monitors
+	template_name = 'actives/visualize_monitors.html'
+	context_object_name = 'monitor_list'  
+	queryset = Monitors.objects.all()
 
 class ListDevices(ListView):
 	model = PassiveDevices
@@ -125,19 +138,26 @@ class ListMaintenance(ListView):
 	queryset = EquipmentMaintenance.objects.all()
 
     
-class ComputersDetailView(DetailView):
+class ComputersDetailView(ListView):
 	model = Computers
+	template_name = 'actives/details_pc.html'
 
-	def get_queryset(self):
-		query = super(ComputersDetailView, self).get_queryset()
-		return query
-
-	def get(self, request, *args, **kwargs):
-		book = get_object_or_404(Computers, pk=kwargs['pk'])
-		context = {'computers_list': book}
-		return render(request, 'actives/details_pc.html', context)
+	def get_context_data(self, **kwargs):
+		context = super(ComputersDetailView, self).get_context_data(**kwargs)
+		context['second_queryset'] =Computers.objects.filter(id = self.kwargs['pk'])
+		context['third_queryset'] = EquipmentMaintenance.objects.filter(computer = self.kwargs['pk'])
+		return context
 
 
+class DevicesDetailView(ListView):
+	model = PassiveDevices
+	template_name = 'actives/details_devices.html'
+
+	def get_context_data(self, **kwargs):
+		context = super(DevicesDetailView, self).get_context_data(**kwargs)
+		context['second_queryset'] =PassiveDevices.objects.filter(id = self.kwargs['pk'])
+		context['third_queryset'] = DevicesMaintenance.objects.filter(device = self.kwargs['pk'])
+		return context
 
 
 class UpdateComputer(_FormValid,UpdateView):
@@ -154,15 +174,25 @@ class UpdateComputer(_FormValid,UpdateView):
 		return reverse("actives:update_computer", kwargs={"pk": pk})
 
 
-class UpdateDevice(_FormValid,UpdateView):
+class UpdateDevice(UpdateComputer):
 	model = PassiveDevices
 	template_name = 'actives/update_device.html'
 	context_object_name = 'devices_list'
 	form_class = FormDevicesRegister  
 	queryset = PassiveDevices.objects.all()
-	success_message = '¡El registro fue actualizado correctamente!'
-	error_message = 'No se actualizó el registro'
  
 	def get_success_url(self):
 		pk = self.kwargs["pk"]
 		return reverse("actives:update_device", kwargs={"pk": pk})
+
+
+class UpdateMonitor(UpdateComputer):
+	model = Monitors
+	template_name = 'actives/update_monitor.html'
+	context_object_name = 'monitor_list'
+	form_class = FormMonitorRegister  
+	queryset = Monitors.objects.all()
+ 
+	def get_success_url(self):
+		pk = self.kwargs["pk"]
+		return reverse("actives:update_monitor", kwargs={"pk": pk})

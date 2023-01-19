@@ -8,7 +8,7 @@
     <div class="container-fluid">
       <div class="header-body">
         <div class="row align-items-center py-4">
-          <div class="col-lg-6 col-7">
+          <div class="col-lg-4 col-7">
             <h6 class="h2 text-text-default d-inline-block mb-0"> Dispositivos tecnológicos</h6>
             {% comment %} <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
               <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
@@ -18,8 +18,8 @@
               </ol>
             </nav> {% endcomment %}
           </div>
-          <div class="col-lg-6 col-5 text-right">
-            <a href="{% url 'actives:register_devices' %}" class="btn btn-sm btn-neutral"><i class="ni ni-tablet-button pr-2 text-orange"></i>Registrar dispositivo</a>
+          <div class="col-lg-8 col-5 text-right">
+            <a href="{% url 'actives:register_devices' %}" class="btn btn-sm btn-neutral"><i class="ni ni-headphones pr-2 text-orange"></i>Registrar dispositivo</a>
             <a href="{% url 'actives:register_model' %}" class="btn btn-sm btn-neutral"><i class="ni ni-fat-add text-orange"></i> Agregar modelo</a>
             <a href="{% url 'actives:register_manufacturer' %}" class="btn btn-sm btn-neutral"><i class="ni ni-fat-add text-orange"></i> Agregar fabricante</a>
            
@@ -66,7 +66,7 @@
                         <i class="fas fa-ellipsis-v pr-1"></i> Acciones
                       </a>
                       <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                        <a class="dropdown-item" href="  "><i class="ni ni-settings text-primary"></i>  Ver detalles </a>
+                        <a class="dropdown-item" href="{% url 'actives:details_device' device.id %}  "><i class="ni ni-settings text-primary"></i>  Ver detalles </a>
                         <a class="dropdown-item" href=""><i class="ni ni-tag text-orange"></i> Re-asignar elementos</a>
 
                       </div>

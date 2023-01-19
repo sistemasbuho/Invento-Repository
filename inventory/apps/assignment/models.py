@@ -34,7 +34,14 @@ class AssignUsers(models.Model):
     date_assignment=models.DateField(verbose_name=u'Fecha de asignación')
     computers=models.ForeignKey(Computers, on_delete=models.CASCADE, verbose_name=u'Equipo asignado')
     passive_devices=models.ManyToManyField(PassiveDevices, verbose_name=u'Dispositivos asignados')
-    type_assignment=models.CharField(max_length=20, choices=TYPE_ASSIGNMENT, default="Por definir",verbose_name=u'Tipo asignación')
+    
+    image_up_pc=models.ImageField(upload_to="assign_user",null=True, blank=True, verbose_name=u'Imagen Equipo superior')
+    image_front_pc=models.ImageField(upload_to="assign_user",null=True, blank=True, verbose_name=u'Imagen Equipo frontal')
+    image_back_pc=models.ImageField(upload_to="assign_user",null=True, blank=True, verbose_name=u'Imagen Equipo debajo')
+    image_monitor=models.ImageField(upload_to="assign_user",null=True, blank=True, verbose_name=u'Imagen monitor')
+    image_keyboard=models.ImageField(upload_to="assign_user",null=True, blank=True, verbose_name=u'Imagen teclado')
+    image_devices=models.ImageField(upload_to="assign_user",null=True, blank=True, verbose_name=u'Imagen dispositivos')
+    image_others=models.ImageField(upload_to="assign_user",null=True, blank=True, verbose_name=u'Imagen Otros elementos')
 
     
     class Meta:

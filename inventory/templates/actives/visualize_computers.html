@@ -10,7 +10,7 @@
     <div class="container-fluid">
       <div class="header-body">
         <div class="row align-items-center py-4">
-          <div class="col-lg-6 col-7">
+          <div class="col-lg-4 col-6">
             <h6 class="h2 text-default d-inline-block mb-0"> Equipos de cómputo</h6>
             {% comment %} <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
               <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
@@ -20,7 +20,7 @@
               </ol>
             </nav> {% endcomment %}
           </div>
-          <div class="col-lg-6 col-5 text-right">
+          <div class="col-lg-8 col-6 text-right">
             <a href="{% url 'actives:register' %}" class="btn btn-sm btn-neutral"> <i class="ni ni-laptop text-orange"></i> Registrar equipo</a>
             <a href="{% url 'actives:register_model' %}" class="btn btn-sm btn-neutral"> <i class="ni ni-fat-add text-orange"></i> Agregar modelo</a>
             <a href="{% url 'actives:register_manufacturer' %}" class="btn btn-sm btn-neutral"> <i class="ni ni-fat-add text-orange"></i> Agregar fabricante</a>
@@ -84,7 +84,7 @@
                       </a>
                       <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                         <a class="dropdown-item" href="{% url 'actives:details_computer' pc.id %}"><i class="ni ni-tag text-orange"></i> Ver detalles</a>
-                        <a class="dropdown-item" href="#"><i class="ni ni-settings text-primary"></i> Mantenimientos</a>
+                        <a class="dropdown-item" href="{% url 'actives:update_computer' pc.id %}"><i class="ni ni-settings text-primary"></i> Editar</a>
 
                    
                       </div>

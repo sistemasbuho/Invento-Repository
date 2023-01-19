@@ -110,6 +110,77 @@ class FormComputerRegister(forms.ModelForm):
 			raise forms.ValidationError('El registro %s ya existe' % serial_number)    
 		return serial_number
 
+
+class FormMonitorRegister(forms.ModelForm):
+	class Meta:
+		model = Monitors
+		fields=['name','date_purchase','product_number','inventory_number','manufacturer','serial_number','state',
+                'description','screen']
+  
+		widgets = {
+			'name':forms.TextInput(
+				attrs={
+					'class':'form-control',
+					'placeholder':'PC - Placa asignada ',
+					'id':'name' }),
+   
+			'date_purchase':forms.DateInput(
+			       format=('%Y-%m-%d'),
+       		 	attrs={
+               'class': 'form-control', 
+               'placeholder': 'yy-mm-dd',
+               'type': 'date'}),
+			
+			'product_number':forms.TextInput(
+				attrs={
+					'class':'form-control',
+					'placeholder':'Ej: T1B43LT',
+					'id':'product_number' }),
+			
+			'inventory_number':forms.NumberInput(
+				attrs={
+					'class':'form-control',
+					'placeholder':'Placa asignada',
+					'id':'inventory_number' }),
+   
+   			'screen':forms.NumberInput(
+				attrs={
+					'class':'form-control',
+					'placeholder':'Pulgadas',
+					'id':'screen' }),
+	
+            'serial_number':forms.TextInput(
+				attrs={
+					'class':'form-control',
+					'placeholder':'Ej: 5CD61520YC',
+					'id':'description',	
+			}),
+            
+            'manufacturer':forms.Select(
+				attrs={
+					'class':'form-control',
+					'id':'manufacturer', }),
+             
+            'state':forms.Select(
+				attrs={
+					'class':'form-control',
+					'id':'state', }),
+
+            'description':forms.Textarea(
+				attrs={
+					'class':'form-control',
+					'placeholder':'Puede incluir cualquier otra característica: Rayones, defectos de carcasa, dispositivos incluidos, fallas incorregibles, lector de huellas , etc',
+					'id':'description', 
+					'rows':5, 
+     			}),
+	}
+
+	def clean_model(self):
+		serial_number = self.cleaned_data["serial_number"]
+		if Computers.objects.filter(serial_number=serial_number).exists():
+			raise forms.ValidationError('El registro %s ya existe' % serial_number)    
+		return serial_number
+
         
 class FormManufacturerRegister(forms.ModelForm):
 	class Meta:
