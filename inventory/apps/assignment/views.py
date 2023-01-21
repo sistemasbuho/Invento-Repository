@@ -1,14 +1,14 @@
-from django.contrib.auth.decorators import login_required,permission_required
-from django.http.response import HttpResponse
-from django.shortcuts import render,redirect
-from django.contrib import messages
-from django.views.generic.detail import DetailView
-from django.views.generic import ListView , CreateView,  View, UpdateView
-from django.shortcuts import get_object_or_404
+from datetime import datetime
+from django.shortcuts import redirect
+from django.views.generic import ListView ,  UpdateView,View
 from django.urls import reverse,reverse_lazy
 from .models import *
 from .forms import *
 from apps.actives.views import registerComputer,_FormValid
+from io import BytesIO
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
 
 class ListUsers(ListView):
 	model = AssignUsers
@@ -19,18 +19,32 @@ class ListUsers(ListView):
 
 class registerUser(registerComputer):
 	model = UserData
-	# permission_required = 'idea.add_idea'
 	form_class = FormUserRegister
 	template_name = 'assignment/register_users.html'
-	success_url = reverse_lazy('users:register_users')
+	success_url = reverse_lazy('users:visualize_users')
 
 
 class registerAssign(registerComputer):
 	model = AssignUsers
-	# permission_required = 'idea.add_idea'
 	form_class = FormAssignRegister
 	template_name = 'assignment/assign_user.html'
-	success_url = reverse_lazy('users:assign_users')
+	success_url = reverse_lazy('users:visualize_users')
+
+	def post(self, request, *args, **kwargs):
+		form = self.form_class(request.POST) 
+		if form.is_valid():
+			form.save()
+			if form.cleaned_data['computers'] is not None:
+				Computers.objects.filter(id= form.cleaned_data['computers'].id).update(state="Activo asignado")
+			
+			if form.cleaned_data['monitor'] is not None:
+				Monitors.objects.filter(id= form.cleaned_data['monitor'].id).update(state="Activo asignado")
+			
+			return self.form_valid(form)
+
+		else:
+			self.form_invalid(form)
+		return redirect(str(self.success_url))
 
 
 class UserDetailView(ListView):
@@ -55,5 +69,26 @@ class UpdateAssigment(_FormValid,UpdateView):
  
 	def get_success_url(self):
 		pk = self.kwargs["pk"]
-		return reverse("actives:update_assignment", kwargs={"pk": pk})
+		return reverse("users:detail_users", kwargs={"pk": pk})
 
+
+def render_to_pdf(template_src, context_dict={}):
+    template = get_template(template_src)
+    html  = template.render(context_dict)
+    result = BytesIO()
+    pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+    if not pdf.err:
+        return HttpResponse(result.getvalue(), content_type='application/pdf')
+    return None
+
+
+
+class GeneratePdf(View):
+    def get(self, request, *args, **kwargs):
+        data = {
+            'amount': 39.99,
+            'customer_name': 'Cooper Mann',
+            'order_id': 1233434,
+        }
+        pdf = render_to_pdf('assignment/generate_act.html', data)
+        return HttpResponse(pdf, content_type='application/pdf')

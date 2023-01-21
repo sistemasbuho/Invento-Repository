@@ -14,7 +14,7 @@
         
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link {% if 'index' in segment %} active {% endif %}" href="/">
+            <a class="nav-link {% if 'index' in segment %} active {% endif %}" href="{% url 'actives:dashboard' %}">
               <i class="ni ni-compass-04 text-primary"></i>
               <span class="nav-link-text">Dashboard</span>
             </a>
@@ -41,19 +41,14 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link {% if 'icons' in segment %} active {% endif %}" href="{% url 'actives:visualize_devices' %}">
+            <a class="nav-link {% if 'icons' in segment %} active {% endif %}" href="{% url 'actives:visualize_monitors' %}">
               <i class="ni ni-tablet-button text-primary"></i>
               <span class="nav-link-text">Monitores</span>
             </a>
           </li>
 
 
-          <li class="nav-item">
-            <a class="nav-link {% if 'map' in segment %} active {% endif %}" href="{% url 'users:visualize_users' %}">
-              <i class="ni ni-single-02 text-primary"></i>
-              <span class="nav-link-text">Usuarios</span>
-            </a>
-          </li>
+          
 
 
         </ul>
@@ -68,18 +63,25 @@
         <ul class="navbar-nav mb-md-3">
 
           <li class="nav-item">
+            <a class="nav-link {% if 'map' in segment %} active {% endif %}" href="{% url 'users:visualize_users' %}">
+              <i class="ni ni-single-02 text-primary"></i>
+              <span class="nav-link-text">Usuarios</span>
+            </a>
+          </li>
+          
+          <li class="nav-item">
             <a class="nav-link {% if 'icons' in segment %} active {% endif %}" href="{% url 'actives:visualize_maintenance' %}">
               <i class="ni ni-settings text-primary"></i>
               <span class="nav-link-text">Mantenimientos</span>
             </a>
           </li>
 
-          <li class="nav-item">
+          {% comment %} <li class="nav-item">
             <a class="nav-link {% if 'map' in segment %} active {% endif %}" href="">
               <i class="ni ni-bag-17 text-primary"></i>
               <span class="nav-link-text">Banco Inactivos</span>
             </a>
-          </li>
+          </li> {% endcomment %}
 
 
           <li class="nav-item">

@@ -35,7 +35,7 @@
             </div>
             <div class="col-6 text-right">
             <a href="{% url 'users:assign_users' %}" class="btn btn-sm btn-info"> Asignar  </a> 
-            <a href="#!" class="btn btn-sm btn-info"> Generar acta </a> 
+            <a href="{% url 'users:generate_pdf' user_list.id %}" class="btn btn-sm btn-info"> Generar acta </a> 
 
           </div>
         </div>
@@ -115,6 +115,7 @@
                       <th scope="col" class="sort" data-sort="budget">Tipo</th>
                       <th scope="col" class="sort" data-sort="status">Estado</th>
                       <th scope="col" class="sort" data-sort="status">Fecha asignación</th>
+                      <th scope="col" class="sort" data-sort="status">Monitor</th>
                       <th scope="col" class="sort" data-sort="status">Dispositivos</th>
                       <th scope="col" class="sort" data-sort="status">Acciones</th>
                  
@@ -128,6 +129,8 @@
                       <td scope="row"> {{user_list.assignment.type_assignment}}</td>
                       <td scope="row"> <span class="badge badge-success"> {{user_list.computers.state}} </span> </td>
                       <td scope="row"> {{user_list.date_assignment}}</td>
+                      <td scope="row"> {{user_list.monitor}}</td>
+
                       <td scope="row"> {% for place in user_list.passive_devices.all %} {{place.name}} {% endfor %}</td>
                       <td class="">
                         <div class="dropdown">
@@ -136,7 +139,6 @@
                           </a>
                           <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                             <a class="dropdown-item" href="{% url 'users:update_assignment' user_list.id %} "><i class="ni ni-tag text-orange"></i> Editar</a>
-                            <a class="dropdown-item" href="#"><i class="ni ni-settings text-primary"></i> Mantenimientos</a>
                           </div>
                         </div>
                       </td>

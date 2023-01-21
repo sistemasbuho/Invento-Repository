@@ -2,13 +2,12 @@
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.views.generic import ListView , CreateView, UpdateView
-from django.views.generic.detail import DetailView
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.urls import reverse_lazy,reverse
 from .models import *
 from .forms import *
-from django.shortcuts import get_object_or_404
-from apps.assignment.models import AssignUsers
+from apps.assignment.models import AssignUsers, UserData
+from datetime import datetime
 
 
 # Clase privada de la que heredan todas las vistas-----------------------------------		
@@ -46,10 +45,9 @@ class _FormValid(PermissionRequiredMixin):
 
 class registerComputer(_FormValid,CreateView):
 	model = Computers
-	# permission_required = 'idea.add_idea'
 	form_class = FormComputerRegister
 	template_name = 'actives/register_computers.html'
-	success_url = reverse_lazy('actives:register')
+	success_url = reverse_lazy('actives:visualize_computer')
 	success_message = '¡El registro fue creado correctamente!'
 	error_message = 'No se guardo con exito.'
 
@@ -69,36 +67,31 @@ class registerComputer(_FormValid,CreateView):
 
 class registerDevices(registerComputer):
 	model = PassiveDevices
-	# permission_required = 'idea.add_idea'
 	form_class = FormDevicesRegister
 	template_name = 'actives/register_devices.html'
-	success_url = reverse_lazy('actives:register_devices')
+	success_url = reverse_lazy('actives:visualize_devices')
 
 
 class registerManufacturer(registerComputer):
 	model = Manufacturer
-	# permission_required = 'idea.add_idea'
 	form_class = FormManufacturerRegister
 	template_name = 'actives/register_manufacturer.html'
 	success_url = reverse_lazy('actives:register_manufacturer')
 
 class registerMonitor(registerComputer):
 	model = Monitors
-	# permission_required = 'idea.add_idea'
 	form_class = FormMonitorRegister
 	template_name = 'actives/register_monitor.html'
 	success_url = reverse_lazy('actives:visualize_monitors')
  
 class registerModel(registerComputer):
 	model = ModelManufacturer
-	# permission_required = 'idea.add_idea'
 	form_class = FormModelManufacturerRegister
 	template_name = 'actives/register_model.html'
 	success_url = reverse_lazy('actives:register_model')
 
 class registerMaintenance(registerComputer):
 	model = EquipmentMaintenance
-	# permission_required = 'idea.add_idea'
 	form_class = FormMaintenanceRegister
 	template_name = 'actives/register_maintenance.html'
 	success_url = reverse_lazy('actives:register_maintenance')
@@ -106,10 +99,9 @@ class registerMaintenance(registerComputer):
  
 class registerTypes(registerComputer):
 	model = TypeDevices
-	# permission_required = 'idea.add_idea'
 	form_class = FormTypesRegister
 	template_name = 'actives/register_type.html'
-	success_url = reverse_lazy('actives:register_type')
+	success_url = reverse_lazy('actives:visualize_devices')
 
 
 class ListComputers(ListView):
@@ -146,6 +138,8 @@ class ComputersDetailView(ListView):
 		context = super(ComputersDetailView, self).get_context_data(**kwargs)
 		context['second_queryset'] =Computers.objects.filter(id = self.kwargs['pk'])
 		context['third_queryset'] = EquipmentMaintenance.objects.filter(computer = self.kwargs['pk'])
+		context['assign_queryset'] = AssignUsers.objects.filter(computers = self.kwargs['pk'])
+
 		return context
 
 
@@ -157,6 +151,21 @@ class DevicesDetailView(ListView):
 		context = super(DevicesDetailView, self).get_context_data(**kwargs)
 		context['second_queryset'] =PassiveDevices.objects.filter(id = self.kwargs['pk'])
 		context['third_queryset'] = DevicesMaintenance.objects.filter(device = self.kwargs['pk'])
+		context['assign_queryset'] = AssignUsers.objects.filter(passive_devices = self.kwargs['pk'])
+
+		return context
+
+
+class MonitorDetailView(ListView):
+	model = Monitors
+	template_name = 'actives/details_monitor.html'
+
+	def get_context_data(self, **kwargs):
+		context = super(MonitorDetailView, self).get_context_data(**kwargs)
+		context['second_queryset'] = Monitors.objects.filter(id = self.kwargs['pk'])
+		context['third_queryset'] = DevicesMaintenance.objects.filter(device = self.kwargs['pk'])
+		context['assign_queryset'] = AssignUsers.objects.filter(monitor = self.kwargs['pk'])
+
 		return context
 
 
@@ -196,3 +205,27 @@ class UpdateMonitor(UpdateComputer):
 	def get_success_url(self):
 		pk = self.kwargs["pk"]
 		return reverse("actives:update_monitor", kwargs={"pk": pk})
+
+
+
+def dashboardGeneral (request):
+	today=datetime.today()
+
+	computers=Computers.objects.all().count()
+	devices=PassiveDevices.objects.all().count()
+	monitor=Monitors.objects.all().count()
+	users=UserData.objects.all().count()
+	maintenance = EquipmentMaintenance.objects.filter(start_maintenance__year=today.year, start_maintenance__month=today.month)
+	assignment = AssignUsers.objects.filter(date_assignment__year=today.year, date_assignment__month=today.month)
+
+	return render(request,'home/index.html',{
+     
+        'computers':computers,
+        'devices':devices,
+        'monitors':monitor, 
+        'users':users, 
+        'maintenance':maintenance,
+        'assignment':assignment,
+        
+        })
+ 

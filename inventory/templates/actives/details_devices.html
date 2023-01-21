@@ -168,6 +168,58 @@
 
              </div>
 
+             <hr class="my-4" />
+             <!-- Description -->
+             <h6 class="heading-small mb-4">Asignaciones</h6>
+             <div class="col-md-12">
+               <div class="table-responsive">
+                 {% comment %} <table id ="example1" class="table align-items-center table-flush dataTable"> {% endcomment %}
+                   <table id="example1" class="table  table-hover dataTable">
+     
+                   <thead class="thead-light">
+                     <tr>
+                       <th scope="col" class="sort" data-sort="name">Usuario</th>
+                       <th scope="col" class="sort" data-sort="budget">CC</th>
+                       <th scope="col" class="sort" data-sort="budget">Dispositivo</th>
+                       <th scope="col" class="sort" data-sort="status">Fecha asignación</th>
+                       <th scope="col" class="sort" data-sort="status">Encargado</th>
+                       <th scope="col" class="sort" data-sort="status">Dispositivos</th>
+                       <th scope="col" class="sort" data-sort="status">Acciones</th>
+                  
+                     </tr>
+                   </thead>
+                   <tbody class="list">
+                     {% for assign in assign_queryset %}
+ 
+                     <tr>
+                       <td scope="row"> {{assign.assignment}}</td>
+                       <td scope="row"> {{assign.assignment.dni_user}}</td>
+                       <td scope="row"> {{assign.passive_devices}}</td>
+                       <td scope="row"> <span class="badge badge-success"> {{assign.computers.state}} </span> </td>
+                       <td scope="row"> {{assign.user}}</td>
+                       <td scope="row"> {{assign.date_assignment}}</td>
+                       <td class="">
+                         <div class="dropdown">
+                           <a class="btn btn-sm " href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                             <i class="fas fa-ellipsis-v pr-1"></i> Acciones
+                           </a>
+                           <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                             <a class="dropdown-item" href=" "><i class="ni ni-tag text-orange"></i> Generar acta</a>
+                           </div>
+                         </div>
+                       </td>
+                     </tr>
+                    
+                     {% endfor %}
+                     
+            
+                    
+               
+                   </tbody>
+                 </table>
+               </div>
+ 
+              </div>
 
         </div>
       </div>

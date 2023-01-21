@@ -20,6 +20,7 @@
           </div>
           <div class="col-lg-8 col-5 text-right">
             <a href="{% url 'actives:register_devices' %}" class="btn btn-sm btn-neutral"><i class="ni ni-headphones pr-2 text-orange"></i>Registrar dispositivo</a>
+            <a href="{% url 'actives:register_type' %}" class="btn btn-sm btn-neutral"><i class="ni ni-fat-add text-orange"></i> Agregar Tipo</a>
             <a href="{% url 'actives:register_model' %}" class="btn btn-sm btn-neutral"><i class="ni ni-fat-add text-orange"></i> Agregar modelo</a>
             <a href="{% url 'actives:register_manufacturer' %}" class="btn btn-sm btn-neutral"><i class="ni ni-fat-add text-orange"></i> Agregar fabricante</a>
            
@@ -43,21 +44,32 @@
             <table id="example1" class="table  table-hover dataTable">
               <thead class="thead-light">
                 <tr>
-                  <th scope="col" class="sort" data-sort="name">ID</th>
+                  <th scope="col" class="sort" data-sort="name">Tipo</th>
                   <th scope="col" class="sort" data-sort="budget">Nombre</th>
                   <th scope="col" class="sort" data-sort="status">Estado</th>
                   <th scope="col" class="sort" data-sort="status">Modelo</th>
-                  <th scope="col" class="sort" data-sort="status">Asignación</th>
                   <th scope="col" class="sort" data-sort="status">Ubicación</th>
+                  <th scope="col" class="sort" data-sort="status">Acciones</th>
              
                 </tr>
               </thead>
               <tbody class="list">
                 {% for device in devices_list %}
                 <tr>
-                  <td scope="row"> {{device.id}}</td>
-                  <td scope="row"> {{device.name}}</td>
-                  <td scope="row"> <span class="badge badge-success"> {{device.state}} </span> </td>
+                  <td scope="row" class="font-weight-bold"> {{device.type_devices|default_if_none:"Pendiente"}}</td>
+                  <td scope="row"> <a class="font-weight-bold" href="{% url 'actives:details_device' device.id %}"> {{device.name}} </a></td>
+                  <td scope="row">
+                    {% if device.state == 'Activo asignado'  %}
+                    <span class="badge badge-primary"> {{device.state}} </span> 
+                    {% elif device.state == 'Activo disponible'  %}
+                    <span class="badge badge-success"> {{device.state}} </span>
+                    {%elif device.state == 'Mantenimiento' %}
+                    <span class="badge badge-warning"> {{device.state}} </span> 
+                    {%elif device.state == 'Dado de baja' %}
+                    <span class="badge badge-danger"> {{device.state}} </span> 
+                    {% endif %}
+                   </td>
+                   
                   <td scope="row"> {{device.manufacturer}}</td>
                   <td scope="row"> {{device.location}}</td>
                   <td class=" ">
@@ -66,8 +78,8 @@
                         <i class="fas fa-ellipsis-v pr-1"></i> Acciones
                       </a>
                       <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                        <a class="dropdown-item" href="{% url 'actives:details_device' device.id %}  "><i class="ni ni-settings text-primary"></i>  Ver detalles </a>
-                        <a class="dropdown-item" href=""><i class="ni ni-tag text-orange"></i> Re-asignar elementos</a>
+                        <a class="dropdown-item" href="{% url 'actives:details_device' device.id %}  "><i class="ni ni-tag text-primary"></i>  Ver detalles </a>
+                        <a class="dropdown-item" href="{% url 'actives:update_device' device.id %} "><i class="ni ni-settings text-orange"></i> Editar </a>
 
                       </div>
                     </div>

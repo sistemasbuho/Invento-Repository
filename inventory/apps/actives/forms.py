@@ -1,5 +1,6 @@
 from django import forms
 from .models import *
+from django.db.models import Q
 
 
 class FormComputerRegister(forms.ModelForm):
@@ -104,6 +105,11 @@ class FormComputerRegister(forms.ModelForm):
      			}),
 	}
 
+	def __init__(self,*args, **kwargs):
+		super(FormComputerRegister, self).__init__(*args, **kwargs)
+		self.fields['manufacturer'].queryset = ModelManufacturer.objects.filter(Q(type_model='Para equipos') | Q(type_model='Todos'))
+	
+  
 	def clean_model(self):
 		serial_number = self.cleaned_data["serial_number"]
 		if Computers.objects.filter(serial_number=serial_number).exists():
@@ -121,7 +127,7 @@ class FormMonitorRegister(forms.ModelForm):
 			'name':forms.TextInput(
 				attrs={
 					'class':'form-control',
-					'placeholder':'PC - Placa asignada ',
+					'placeholder':'MON - Placa asignada ',
 					'id':'name' }),
    
 			'date_purchase':forms.DateInput(
@@ -175,6 +181,11 @@ class FormMonitorRegister(forms.ModelForm):
      			}),
 	}
 
+	def __init__(self,*args, **kwargs):
+		super(FormMonitorRegister, self).__init__(*args, **kwargs)
+		self.fields['manufacturer'].queryset = ModelManufacturer.objects.filter(Q(type_model='Para monitor') | Q(type_model='Todos'))
+	
+  
 	def clean_model(self):
 		serial_number = self.cleaned_data["serial_number"]
 		if Computers.objects.filter(serial_number=serial_number).exists():
@@ -302,7 +313,10 @@ class FormDevicesRegister(forms.ModelForm):
 					'rows':5, 
      			}),
 		}
-  
+	def __init__(self,*args, **kwargs):
+		super(FormDevicesRegister, self).__init__(*args, **kwargs)
+		self.fields['manufacturer'].queryset = ModelManufacturer.objects.filter(Q(type_model='Para dispositivos') | Q(type_model='Todos'))
+	
   
 class FormTypesRegister(forms.ModelForm):
 	class Meta:

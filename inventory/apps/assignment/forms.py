@@ -1,7 +1,7 @@
 from django import forms
 from .models import *
 from django.contrib.auth.models import User
-
+from apps.actives.models import Computers,Monitors,PassiveDevices
 
 class FormUserRegister(forms.ModelForm):
 	class Meta:
@@ -45,7 +45,7 @@ class FormUserRegister(forms.ModelForm):
 class FormAssignRegister(forms.ModelForm):
 	class Meta:
 		model = AssignUsers
-		fields=['user','assignment','date_assignment','computers','passive_devices']
+		fields=['monitor','user','assignment','date_assignment','computers','passive_devices']
   
 		widgets = {
 			'user':forms.Select(
@@ -53,7 +53,11 @@ class FormAssignRegister(forms.ModelForm):
 					'class':'form-control',
 					'id':'manufacturer', }),
    
-      
+      		'monitor':forms.Select(
+				attrs={
+					'class':'form-control',
+					'id':'monitor', }),
+   
 			'assignment':forms.Select(
 				attrs={
 					'class':'form-control',
@@ -73,12 +77,19 @@ class FormAssignRegister(forms.ModelForm):
 					'id':'computers', }),
             
         }
-  
-  
+
+	def __init__(self,*args, **kwargs):
+		super(FormAssignRegister, self).__init__(*args, **kwargs)
+		self.fields['passive_devices'].queryset = PassiveDevices.objects.filter(state="Activo disponible")
+		self.fields['computers'].queryset = Computers.objects.filter(state="Activo disponible")
+		self.fields['monitor'].queryset = Monitors.objects.filter(state="Activo disponible")
+
+    
+
 class FormAssignUpdate(forms.ModelForm):
 	class Meta:
 		model = AssignUsers
-		fields=['user','assignment','date_assignment','computers','passive_devices']
+		fields=['monitor','user','assignment','date_assignment','computers','passive_devices']
   
 		widgets = {
 			'user':forms.Select(
@@ -86,6 +97,10 @@ class FormAssignUpdate(forms.ModelForm):
 					'class':'form-control',
 					'id':'manufacturer', }),
    
+   			'monitor':forms.Select(
+				attrs={
+					'class':'form-control',
+					'id':'monitor', }),
       
 			'assignment':forms.Select(
 				attrs={
@@ -106,3 +121,11 @@ class FormAssignUpdate(forms.ModelForm):
 					'id':'computers', }),
             
         }
+
+	def __init__(self,*args, **kwargs):
+		super(FormAssignRegister, self).__init__(*args, **kwargs)
+		self.fields['passive_devices'].queryset = PassiveDevices.objects.filter(state="Activo disponible")
+		self.fields['computers'].queryset = Computers.objects.filter(state="Activo disponible")
+		self.fields['monitor'].queryset = Monitors.objects.filter(state="Activo disponible")
+
+    

@@ -108,44 +108,44 @@
             </div>
             <hr class="my-4" />
             <!-- Address -->
-            <h6 class="heading-small mb-4">detalles técnicos</h6>
+            <h6 class="heading-small mb-4">Detalles técnicos</h6>
             <div class="pl-lg-4">
               <div class="row">
 
                 <div class="col-md-6">
                   <label class="font-weight-bold"> Procesador</label>
-                  <p>  {{computers_list.processor}}</p>
+                  <p>  {{computers_list.processor|default_if_none:"Por definir" }}</p>
                  </div>
 
                  <div class="col-md-6">
                   <label class="font-weight-bold"> Memoria RAM</label>
-                  <p>  {{computers_list.ram_memory}}</p>
+                  <p>  {{computers_list.ram_memory|default_if_none:"Por definir" }}</p>
                  </div>
 
                  <div class="col-md-6">
                   <label class="font-weight-bold"> Disco duro</label>
-                  <p>  {{computers_list.disk_memory}}</p>
+                  <p>  {{computers_list.disk_memory|default_if_none:"Por definir" }}</p>
                  </div>
 
                  <div class="col-md-6">
                   <label class="font-weight-bold"> Tarjeta gráfica</label>
-                  <p>  {{computers_list.graphics}}</p>
+                  <p>  {{computers_list.graphics|default_if_none:"Por definir" }}</p>
                  </div>
 
                  <div class="col-md-6">
                   <label class="font-weight-bold"> Pantalla</label>
-                  <p>  {{computers_list.monitor_screen}}</p>
+                  <p>  {{computers_list.monitor_screen|default_if_none:"Por definir" }}</p>
                  </div>
 
 
                  <div class="col-md-6">
                   <label class="font-weight-bold"> Sistema operativo</label>
-                  <p>  {{computers_list.operative_system}}</p>
+                  <p>  {{computers_list.operative_system|default_if_none:"Por definir" }}</p>
                  </div>
 
                  <div class="col-md-12">
                   <label class="font-weight-bold"> Descripción</label>
-                  <p>  {{computers_list.description}}</p>
+                  <p>  {{computers_list.description|default_if_none:"Por definir" }}</p>
                  </div>
 
               </div>
@@ -191,7 +191,6 @@
                           </a>
                           <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                             <a class="dropdown-item" href=" "><i class="ni ni-tag text-orange"></i> Editar</a>
-                            <a class="dropdown-item" href="#"><i class="ni ni-settings text-primary"></i> Mantenimientos</a>
                           </div>
                         </div>
                       </td>
@@ -208,6 +207,58 @@
 
              </div>
 
+             <hr class="my-4" />
+             <!-- Description -->
+             <h6 class="heading-small mb-4">Asignaciones</h6>
+             <div class="col-md-12">
+               <div class="table-responsive">
+                 {% comment %} <table id ="example1" class="table align-items-center table-flush dataTable"> {% endcomment %}
+                   <table id="example1" class="table  table-hover dataTable">
+     
+                   <thead class="thead-light">
+                     <tr>
+                       <th scope="col" class="sort" data-sort="name">Usuario</th>
+                       <th scope="col" class="sort" data-sort="budget">CC</th>
+                       <th scope="col" class="sort" data-sort="budget">Equipo</th>
+                       <th scope="col" class="sort" data-sort="status">Estado</th>
+                       <th scope="col" class="sort" data-sort="status">Encargado</th>
+                       <th scope="col" class="sort" data-sort="status">Fecha asignación</th>
+                       <th scope="col" class="sort" data-sort="status">Acciones</th>
+                  
+                     </tr>
+                   </thead>
+                   <tbody class="list">
+                     {% for assign in assign_queryset %}
+ 
+                     <tr>
+                       <td scope="row"> {{assign.assignment}}</td>
+                       <td scope="row"> {{assign.assignment.dni_user}}</td>
+                       <td scope="row"> {{assign.computers}}</td>
+                       <td scope="row"> <span class="badge badge-success"> {{assign.computers.state}} </span> </td>
+                       <td scope="row"> {{assign.user}}</td>
+                       <td scope="row"> {{assign.date_assignment}}</td>
+                       <td class="">
+                         <div class="dropdown">
+                           <a class="btn btn-sm " href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                             <i class="fas fa-ellipsis-v pr-1"></i> Acciones
+                           </a>
+                           <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                             <a class="dropdown-item" href=" "><i class="ni ni-tag text-orange"></i> Generar acta</a>
+                           </div>
+                         </div>
+                       </td>
+                     </tr>
+                    
+                     {% endfor %}
+                     
+            
+                    
+               
+                   </tbody>
+                 </table>
+               </div>
+ 
+              </div>
 
         </div>
       </div>

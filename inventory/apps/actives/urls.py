@@ -25,6 +25,10 @@ urlpatterns = [
     
     path('details/computer/<int:pk>', ComputersDetailView.as_view(), name='details_computer'),
     path('details/device/<int:pk>', DevicesDetailView.as_view(), name='details_device'),
+    path('details/monitor/<int:pk>', MonitorDetailView.as_view(), name='details_monitor'),
+
+
+    path('dashboard', dashboardGeneral, name='dashboard'),
 
 
 ]
