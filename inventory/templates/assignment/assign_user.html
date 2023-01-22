@@ -1,7 +1,13 @@
-
 {% extends 'layouts/base.html' %}
 
 {% block title %} Registro {% endblock title %}
+
+
+{% block stylesheets %}
+
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+{% endblock stylesheets %}
 
 {% block content %}
 
@@ -79,9 +85,9 @@
                     <div class="form-group">
                       <label class="form-control-label" for="input-name">{{form.passive_devices.label}}</label>
                       {{form.passive_devices}}
-                    </div>
+                      <div class="error_message" id="passive_devices_error"> {{ form.passive_devices.error}} </div>
+                    </div>                   
                   </div>
-        
 
               </div>
 
@@ -104,4 +110,61 @@
 {% endblock content %}
 
 <!-- Specific JS goes HERE --> 
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+  function BuscarPorNombreModeloMultiple(id_input, url_django) {
+
+    $(id_input).select2({
+        placeholder: "Buscar y Seleccionar",
+        //dropdownParent: $("#creacion"),
+        //dropdownAutoWidth: false,
+        //allowClear: true,
+        //selectOnClose: false,
+        multiple:true,
+        width: '100%',
+        //minimumInputLength: 2, //https://github.com/select2/select2/issues/2561
+
+        ajax: {
+            url: url_django,
+            dataType:'json',
+            type:"GET",
+            processResults: function (data) {
+                console.log("data ",data)
+                return {
+                    results: $.map(data, function (item, index) {
+                        return {
+                            text: item.name,
+                            id: item.id
+                        }
+                    })
+                };
+            }
+        }
+
+    });
+
+    //soluciòn al problema del placeholder en los select multiples
+    $('.select2-search__field').css('width', '100%');
+
+    //soluciòn al problema del scroll dentro de los modales
+    $('select.select2:not(.normal)').each(function () {
+        $(this).select2({
+            dropdownParent: $(this).parent().parent()
+        });
+    });
+
+  }
+
+  {% comment %} 
+  Activa el select2 y el endpoint 
+  TODO: filtrar en el endpoint por dispositivos con estado: "Activo disponible"
+  {% endcomment %}
+
+  console.log("asd ","{% url "users:search_passive_devices" %}")
+  BuscarPorNombreModeloMultiple('#passive_devices_crear_id', '{% url "users:search_passive_devices" %}');
+
+</script>
+{% endblock javascripts %}

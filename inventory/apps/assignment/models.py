@@ -34,7 +34,7 @@ class AssignUsers(models.Model):
     assignment= models.ForeignKey(UserData, on_delete=models.CASCADE, verbose_name=u'Encargado')
     date_assignment=models.DateField(verbose_name=u'Fecha de asignación')
     computers=models.ForeignKey(Computers, on_delete=models.CASCADE, verbose_name=u'Equipo asignado',null=True,blank=True,)
-    passive_devices=models.ManyToManyField(PassiveDevices, verbose_name=u'Dispositivos asignados')
+    passive_devices=models.ManyToManyField(PassiveDevices, verbose_name=u'Dispositivos asignados',blank=True)
     monitor=models.ForeignKey(Monitors, on_delete=models.CASCADE,null=True,blank=True, verbose_name=u'Monitor asignado')
 
     image_up_pc=models.ImageField(upload_to="assign_user",null=True, blank=True, verbose_name=u'Imagen Equipo superior')

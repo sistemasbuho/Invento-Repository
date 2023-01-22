@@ -80,7 +80,12 @@ class FormAssignRegister(forms.ModelForm):
 
 	def __init__(self,*args, **kwargs):
 		super(FormAssignRegister, self).__init__(*args, **kwargs)
-		self.fields['passive_devices'].queryset = PassiveDevices.objects.filter(state="Activo disponible")
+		self.fields['passive_devices'].queryset = PassiveDevices.objects.none()
+  
+		self.fields['passive_devices'].required = False
+		self.fields['passive_devices'].widget.attrs['class'] = "form-control"
+		self.fields['passive_devices'].widget.attrs['id'] = "passive_devices_crear_id"
+  
 		self.fields['computers'].queryset = Computers.objects.filter(state="Activo disponible")
 		self.fields['monitor'].queryset = Monitors.objects.filter(state="Activo disponible")
 

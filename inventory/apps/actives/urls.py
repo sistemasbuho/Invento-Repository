@@ -28,7 +28,8 @@ urlpatterns = [
     path('details/monitor/<int:pk>', MonitorDetailView.as_view(), name='details_monitor'),
 
 
-    path('dashboard', dashboardGeneral, name='dashboard'),
+    path('', dashboardGeneral, name='dashboard'),
 
 
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

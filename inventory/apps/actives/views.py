@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required, permission_required
 
 from django.shortcuts import redirect, render
 from django.contrib import messages
@@ -47,7 +48,7 @@ class registerComputer(_FormValid,CreateView):
 	model = Computers
 	form_class = FormComputerRegister
 	template_name = 'actives/register_computers.html'
-	success_url = reverse_lazy('actives:visualize_computer')
+	success_url = reverse_lazy('actives:visualize')
 	success_message = '¡El registro fue creado correctamente!'
 	error_message = 'No se guardo con exito.'
 
@@ -207,7 +208,8 @@ class UpdateMonitor(UpdateComputer):
 		return reverse("actives:update_monitor", kwargs={"pk": pk})
 
 
-
+@login_required
+@permission_required('actives.add_actives', raise_exception=True)
 def dashboardGeneral (request):
 	today=datetime.today()
 

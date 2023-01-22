@@ -12,7 +12,7 @@
           </div> {% endcomment %}
         </div>
         <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
-          <span aria-hidden="true">×</span>
+          <span aria-hidden="true">X</span>
         </button>
       </form>
       <!-- Navbar links -->
@@ -54,7 +54,7 @@
             </div>
          
             <div class="dropdown-divider"></div>
-            <a href="{% url 'logout' %}" class="dropdown-item">
+            <a href="{% url 'authentication:logout' %}?next=/" class="dropdown-item">
               <i class="ni ni-user-run text-red"></i>
               <span>Logout</span>
             </a>
