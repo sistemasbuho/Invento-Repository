@@ -31,7 +31,16 @@ class registerAssign(registerComputer):
 	success_url = reverse_lazy('users:visualize_users')
 
 	def post(self, request, *args, **kwargs):
-		form = self.form_class(request.POST) 
+		form = self.form_class(request.POST)
+
+		form_header = dict(request.POST.lists())
+
+		# Realizamos el guardado del many to many añadiendo desde una lista
+		validate_passive_devices = 'passive_devices' in form_header
+		if validate_passive_devices:
+			passive_devices_query = PassiveDevices.objects.filter(pk__in=form_header['passive_devices'])  # ['2', '3']
+			form.fields['passive_devices'].queryset = passive_devices_query
+  
 		if form.is_valid():
 			form.save()
 			if form.cleaned_data['computers'] is not None:
@@ -40,6 +49,10 @@ class registerAssign(registerComputer):
 			if form.cleaned_data['monitor'] is not None:
 				Monitors.objects.filter(id= form.cleaned_data['monitor'].id).update(state="Activo asignado")
 			
+			# TODO: traer los dispositivo y actualizamos su estado
+			if validate_passive_devices:		
+				PassiveDevices.objects.filter(pk__in=form_header['passive_devices']).update(state="Activo asignado")
+				
 			return self.form_valid(form)
 
 		else:

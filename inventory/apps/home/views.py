@@ -11,7 +11,9 @@ from django.urls import reverse
 @login_required(login_url="/login/")
 def index(request):
     context = {'segment': 'index'}
-
+    from django.conf import settings
+    print("settings.MEDIA_URL ",settings.MEDIA_URL)
+    print("document_root=settings.MEDIA_ROOT ",settings.MEDIA_ROOT)
     html_template = loader.get_template('home/index.html')
     return HttpResponse(html_template.render(context, request))
 

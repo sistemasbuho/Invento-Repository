@@ -21,16 +21,20 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('actives/',include(('apps.actives.urls','actives'))),
+    path('',include(('apps.actives.urls','actives'))),
     path('users/', include(('apps.assignment.urls','users'))),        
-    path("", include("apps.authentication.urls")), # Auth routes - login / register
-    path("", include("apps.home.urls")),
+    path("authentication/", include(("apps.authentication.urls",'authentication'))), # Auth routes - login / register
     
+    # TODO: Error encontrado en está URL
+    path('', include(('apps.home.urls','home'))),
 	#path('', ViewHome, name='home'),
+    path('__debug__/', include('debug_toolbar.urls')),
 
-]
-# + static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)
+] 
+# urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 admin.site.site_header = "Administrador de Invento"
 admin.site.site_title = "Administración de Invento"

@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'apps.home',
     'apps.authentication',
     'apps.assignment',
+    #Permite analizar el rendimiento de las consultas SQL 
+   	'debug_toolbar', 
 ]
 
 MIDDLEWARE = [
@@ -59,14 +61,25 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #django_toolbar
+	'debug_toolbar.middleware.DebugToolbarMiddleware',
+
 ]
 
 ROOT_URLCONF = 'inventory.urls'
 
+#IPs validas para django_toolbar
+INTERNAL_IPS = [
+	# ...
+	'127.0.0.1',
+	'localhost',
+	# ...
+]
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-       'DIRS': ['templates'],
+        'DIRS': [BASE_DIR /'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -92,6 +105,10 @@ DATABASES = {
     }
 }
 
+LOGIN_URL = "/authentication/login/"
+
+LOGIN_REDIRECT_URL = "/authentication/profile/"
+LOGOUT_REDIRECT_URL = "/"
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -128,13 +145,20 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [BASE_DIR / 'static',]
+STATIC_URL = "static/"
+# MEDIA_URL = "media/"
+
+# este se encarga de mostrar la información de los estaticos
+STATICFILES_DIRS = (
+    BASE_DIR / 'static',
+)
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
+# MEDIA_ROOT = BASE_DIR / "static/media"
+MEDIA_URL = 'uploads/'
+MEDIA_ROOT = BASE_DIR / 'uploads'
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'uploads'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
