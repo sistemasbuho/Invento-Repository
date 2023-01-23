@@ -32,6 +32,8 @@
             </div>
             <div class="col-4 text-right">
               <a href="{% url 'actives:register_type' %}" class="btn btn-sm btn-primary">Agregar Tipo de dispositivo</a>
+              <a href="{{request.META.HTTP_REFERER}}"class="btn btn-sm btn-light">Regresar</a>
+
             </div>
           </div>
         </div>

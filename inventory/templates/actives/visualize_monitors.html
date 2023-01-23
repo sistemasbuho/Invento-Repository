@@ -55,8 +55,8 @@
               <tbody class="list">
                 {% for device in monitor_list %}
                 <tr>
-                  <td scope="row"> {{device.id}}</td>
                   <td scope="row"> {{device.inventory_number}}</td>
+                  <td scope="row"> {{device.name}}</td>
                   <td scope="row"> 
                     {% if device.state == 'Activo asignado'  %}
                     <span class="badge badge-primary"> {{device.state}} </span> 

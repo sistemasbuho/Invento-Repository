@@ -33,6 +33,7 @@
             <div class="col-4 text-right">
               <a href="#!" class="btn btn-sm btn-light">Regresar</a> 
               <a href="{% url 'actives:register_maintenance' %}" class="btn btn-sm btn-info"> Agregar Mantenimiento </a> 
+              <a href="{{request.META.HTTP_REFERER}}"class="btn btn-sm btn-light">Regresar</a>
 
             </div>
           </div>

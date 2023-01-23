@@ -31,8 +31,9 @@
               <h3 class="mb-0">Registro de modelos </h3>
             </div>
             <div class="col-4 text-right">
-              <a href="{% url 'actives:register_manufacturer' %}"  class="btn btn-sm btn-primary">Agregar nuevo fabricante</a>
-            </div>
+              <a href="{% url 'actives:register_manufacturer' %}"  class="btn btn-sm btn-primary">Agregar nuevo fabricante</a>           </div>
+              <a href="{{request.META.HTTP_REFERER}}"class="btn btn-sm btn-light">Regresar</a>
+
           </div>
         </div>
         <div class="card-body">

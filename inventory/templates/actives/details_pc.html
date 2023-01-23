@@ -37,6 +37,8 @@
             <div class="col-6 text-right">
               <a href="{% url 'actives:update_computer' computers_list.id %}" class="btn btn-sm btn-light"> Editar</a>
             <a href="{% url 'actives:register_maintenance' %}" class="btn btn-sm btn-info"> <i class="ni ni-settings text-orange"></i> Agregar mantenimiento</a>
+            <a href="{{request.META.HTTP_REFERER}}"class="btn btn-sm btn-light">Regresar</a>
+
           </div>
         </div>
       </div>

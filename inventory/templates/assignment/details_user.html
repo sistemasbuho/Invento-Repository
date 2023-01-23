@@ -36,6 +36,7 @@
             <div class="col-6 text-right">
             <a href="{% url 'users:assign_users' %}" class="btn btn-sm btn-info"> Asignar  </a> 
             <a href="{% url 'users:generate_pdf' user_list.id %}" class="btn btn-sm btn-info"> Generar acta </a> 
+            <a href="{{request.META.HTTP_REFERER}}"class="btn btn-sm btn-light">Regresar</a>
 
           </div>
         </div>

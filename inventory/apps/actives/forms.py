@@ -108,7 +108,7 @@ class FormComputerRegister(forms.ModelForm):
 	def __init__(self,*args, **kwargs):
 		super(FormComputerRegister, self).__init__(*args, **kwargs)
 		self.fields['manufacturer'].queryset = ModelManufacturer.objects.filter(Q(type_model='Para equipos') | Q(type_model='Todos'))
-	
+		self.fields['inventory_number'].widget.attrs['min'] = 1
   
 	def clean_model(self):
 		serial_number = self.cleaned_data["serial_number"]
@@ -184,7 +184,8 @@ class FormMonitorRegister(forms.ModelForm):
 	def __init__(self,*args, **kwargs):
 		super(FormMonitorRegister, self).__init__(*args, **kwargs)
 		self.fields['manufacturer'].queryset = ModelManufacturer.objects.filter(Q(type_model='Para monitor') | Q(type_model='Todos'))
-	
+		self.fields['screen'].widget.attrs['min'] = 12
+		self.fields['inventory_number'].widget.attrs['min'] = 1
   
 	def clean_model(self):
 		serial_number = self.cleaned_data["serial_number"]
@@ -196,7 +197,7 @@ class FormMonitorRegister(forms.ModelForm):
 class FormManufacturerRegister(forms.ModelForm):
 	class Meta:
 		model = Manufacturer
-		fields=['name','type_manufacturer']
+		fields=['name']
   
 		widgets = {
 				'name':forms.TextInput(
@@ -205,12 +206,7 @@ class FormManufacturerRegister(forms.ModelForm):
 					'placeholder':'Nombre del fabricante',
 					'onkeyup':'this.value = this.value.toUpperCase();',
 					'id':'name' }),
-    
-				     
-				'type_manufacturer':forms.Select(
-					attrs={
-						'class':'form-control',
-						'id':'type_manufacturer', }),
+ 			    
 
 		}
 
@@ -321,7 +317,8 @@ class FormDevicesRegister(forms.ModelForm):
 	def __init__(self,*args, **kwargs):
 		super(FormDevicesRegister, self).__init__(*args, **kwargs)
 		self.fields['manufacturer'].queryset = ModelManufacturer.objects.filter(Q(type_model='Para dispositivos') | Q(type_model='Todos'))
-	
+		self.fields['inventory_number'].widget.attrs['min'] = 1
+
   
 class FormTypesRegister(forms.ModelForm):
 	class Meta:

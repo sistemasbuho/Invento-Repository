@@ -31,7 +31,9 @@
               <h3 class="mb-0">Registro de equipos </h3>
             </div>
             <div class="col-4 text-right">
-              {% comment %} <a href="#!" class="btn btn-sm btn-primary">Settings</a> {% endcomment %}
+              <a href="{% url 'actives:visualize' %}" class="btn btn-sm btn-primary">Lista de equipos</a>
+              <a href="{{request.META.HTTP_REFERER}}"class="btn btn-sm btn-light">Regresar</a>
+
             </div>
           </div>
         </div>

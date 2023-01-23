@@ -83,6 +83,7 @@ class UpdateAssigment(_FormValid,UpdateView):
 		instance = self.get_object()
 		form = self.form_class(instance=instance)
 		form.fields['passive_devices'].queryset = instance.passive_devices.all() 
+		# form.fields['monitor'].queryset = instance.monitor.all() 
 		return form
 
 	def post(self,request,*args,**kwargs):
@@ -101,25 +102,42 @@ class UpdateAssigment(_FormValid,UpdateView):
 		form.fields['passive_devices'].queryset = passive_devices_query
 
 		if form.is_valid():
+			
+			""" Start: Validación de estado de Dispositivos asignados"""		
 
-   			# capturamos los datos del formulario inicial
+			# capturamos los datos del formulario inicial
 			get_form_start = self.get_form(self)
 			pasivo_original = get_form_start.fields['passive_devices'].queryset
-			
+
 			try:
 				pasivo_actualizado = PassiveDevices.objects.filter(pk__in=form_header['passive_devices'])
 			except KeyError:
 				pasivo_actualizado = PassiveDevices.objects.none()
     
-			_difference = set(pasivo_original).difference(set(pasivo_actualizado))
+			_difference_pasivo = set(pasivo_original).difference(set(pasivo_actualizado))
 
-			if _difference:
-				for device in _difference:
+			if _difference_pasivo:
+				for device in _difference_pasivo:
 					PassiveDevices.objects.filter(pk=device.id).update(state="Activo disponible")
 
 			else:
 				PassiveDevices.objects.filter(pk__in=form_header['passive_devices']).update(state="Activo asignado")
 			
+			""" End: Validación de estado de Dispositivos asignados"""
+
+			monitor_original = get_form_start.initial['monitor']
+			
+			if form.cleaned_data['monitor'] is not None:
+				monitor_actualizado = form.cleaned_data['monitor'].id
+				Monitors.objects.filter(id=monitor_actualizado).update(state="Activo asignado")
+			else:
+				monitor_actualizado = -1
+			_difference_monitor = int(monitor_original) != int(monitor_actualizado)
+
+			if _difference_monitor:
+				Monitors.objects.filter(id=monitor_original).update(state="Activo disponible")
+   
+
 			form.save()
 
 			return self.form_valid(form)

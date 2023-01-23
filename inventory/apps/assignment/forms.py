@@ -136,3 +136,14 @@ class FormAssignUpdate(forms.ModelForm):
 		self.fields['passive_devices'].required = False
 		self.fields['passive_devices'].widget.attrs['class'] = "form-control"
 		self.fields['passive_devices'].widget.attrs['id'] = "passive_devices_crear_id"
+
+		# validar uun atributo interno
+		# https://stackoverflow.com/questions/610883/how-do-i-check-if-an-object-has-an-attribute
+		hasattr(kwargs['instance'], 'monitor_id')
+
+		# query_monitor_activo_disponible = Monitors.objects.filter(state="Activo disponible")
+		# if kwargs['instance'].monitor:
+		# 	query_monitor_pk = Monitors.objects.filter(pk=kwargs['instance'].monitor.pk)
+		# 	self.fields['monitor'].queryset = query_monitor_pk.union(query_monitor_activo_disponible)
+		# else:
+		# 	self.fields['monitor'].queryset = query_monitor_activo_disponible

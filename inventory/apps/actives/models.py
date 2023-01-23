@@ -50,7 +50,6 @@ class TypeDevices(models.Model):
         
 class Manufacturer(models.Model):
     name=models.CharField('Nombre',max_length=150,unique=True)
-    type_manufacturer=models.CharField(max_length=20, choices=TYPE_MANUFACTURER, verbose_name=u'Tipo de fabricante')
 
     def __str__(self):
         return self.name   
