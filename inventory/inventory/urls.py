@@ -17,17 +17,16 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
-from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include(('apps.actives.urls','actives'))),
     path('users/', include(('apps.assignment.urls','users'))),        
     path("authentication/", include(("apps.authentication.urls",'authentication'))), # Auth routes - login / register
-    
+  	path('ckeditor/', include('ckeditor_uploader.urls')),
+
     # TODO: Error encontrado en está URL
     path('', include(('apps.home.urls','home'))),
-	#path('', ViewHome, name='home'),
     path('__debug__/', include('debug_toolbar.urls')),
 
 ] 

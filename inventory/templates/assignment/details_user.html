@@ -53,23 +53,7 @@
 
                   <div class="col-md-7 row">
 
-           
-                     {% comment %} <div class="col-md-6">
-                      <label class="font-weight-bold"> Estado</label>
-                      <p>  
-                        {% if user_list.state == 'Activo asignado'  %}
-                        <a href="#!" class="btn btn-sm btn-success"> {{user_list.state}} </a> 
-                        {% elif user_list.state == 'Activo disponible'  %}
-                        <a href="#!" class="btn btn-sm btn-success"> {{user_list.state}} </a>
-                        {%elif user_list.state == 'Mantenimiento' %}
-                        <a href="#!" class="btn btn-sm btn-warning"> {{user_list.state}} </a> 
-                        {%elif user_list.state == 'Dado de baja' %}
-                        <a href="#!" class="btn btn-sm btn-danger"> {{user_list.state}} </a> 
-            
-                        {% endif %}
-                      </p>
-                     </div> {% endcomment %}
-
+          
                      <div class="col-md-6">
                       <label class="font-weight-bold"> Nombre</label>
                       <p>    {{user_list.assignment.name_user}}
@@ -102,7 +86,7 @@
             </div>
             <hr class="my-4" />
             <!-- Address -->
-            <h6 class="heading-small mb-4">Historial de asignaciones</h6>
+            <h6 class="heading-small mb-4">Asignación actual</h6>
             <div class="col-md-12">
               <div class="table-responsive">
                 {% comment %} <table id ="example1" class="table align-items-center table-flush dataTable"> {% endcomment %}
@@ -113,7 +97,6 @@
                       <th scope="col" class="sort" data-sort="budget">CC</th>
                       <th scope="col" class="sort" data-sort="name">Equipo</th>
                       <th scope="col" class="sort" data-sort="budget">Tipo</th>
-                      <th scope="col" class="sort" data-sort="status">Estado</th>
                       <th scope="col" class="sort" data-sort="status">Fecha asignación</th>
                       <th scope="col" class="sort" data-sort="status">Monitor</th>
                       <th scope="col" class="sort" data-sort="status">Dispositivos</th>
@@ -125,13 +108,12 @@
 
                     <tr>
                       <td scope="row"> {{user_list.assignment.dni_user}}</td>
-                      <td scope="row"> {{user_list.computers}}</td>
+                      <td scope="row"> {{user_list.computers|default_if_none:"N/A"}}</td>
                       <td scope="row"> {{user_list.assignment.type_assignment}}</td>
-                      <td scope="row"> <span class="badge badge-success"> {{user_list.computers.state}} </span> </td>
                       <td scope="row"> {{user_list.date_assignment}}</td>
-                      <td scope="row"> {{user_list.monitor}}</td>
+                      <td scope="row"> {{user_list.monitor|default_if_none:"N/A"}}</td>
 
-                      <td scope="row"> {% for place in user_list.passive_devices.all %} {{place.name}} {% endfor %}</td>
+                      <td scope="row"> {% for place in user_list.passive_devices.all %} | {{place.name}} | {% endfor %}</td>
                       <td class="">
                         <div class="dropdown">
                           <a class="btn btn-sm " href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

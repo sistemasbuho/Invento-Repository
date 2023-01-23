@@ -243,6 +243,11 @@ class FormModelManufacturerRegister(forms.ModelForm):
 					attrs={
 						'class':'form-control',
 						'id':'manufacturer', }),
+       
+       			'product_image':forms.FileInput(
+					attrs={
+						'class':'form-control',
+						'id':'product_image', }),
 		}
 
 	def clean_model(self):

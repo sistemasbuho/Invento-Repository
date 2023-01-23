@@ -2,6 +2,7 @@ from django import forms
 from .models import *
 from django.contrib.auth.models import User
 from apps.actives.models import Computers,Monitors,PassiveDevices
+from ckeditor.widgets import CKEditorWidget
 
 class FormUserRegister(forms.ModelForm):
 	class Meta:
@@ -45,8 +46,9 @@ class FormUserRegister(forms.ModelForm):
 class FormAssignRegister(forms.ModelForm):
 	class Meta:
 		model = AssignUsers
-		fields=['monitor','user','assignment','date_assignment','computers','passive_devices']
   
+		fields=['monitor','user','assignment','date_assignment','computers','passive_devices','description']
+
 		widgets = {
 			'user':forms.Select(
 				attrs={
@@ -94,7 +96,7 @@ class FormAssignRegister(forms.ModelForm):
 class FormAssignUpdate(forms.ModelForm):
 	class Meta:
 		model = AssignUsers
-		fields=['monitor','user','assignment','date_assignment','computers','passive_devices']
+		fields=['monitor','user','assignment','date_assignment','computers','passive_devices','description']
   
 		widgets = {
 			'user':forms.Select(
@@ -128,9 +130,9 @@ class FormAssignUpdate(forms.ModelForm):
         }
 
 	def __init__(self,*args, **kwargs):
-		super(FormAssignRegister, self).__init__(*args, **kwargs)
-		self.fields['passive_devices'].queryset = PassiveDevices.objects.filter(state="Activo disponible")
-		self.fields['computers'].queryset = Computers.objects.filter(state="Activo disponible")
-		self.fields['monitor'].queryset = Monitors.objects.filter(state="Activo disponible")
-
-    
+		super(FormAssignUpdate, self).__init__(*args, **kwargs)
+		self.fields['passive_devices'].queryset = PassiveDevices.objects.none()
+  
+		self.fields['passive_devices'].required = False
+		self.fields['passive_devices'].widget.attrs['class'] = "form-control"
+		self.fields['passive_devices'].widget.attrs['id'] = "passive_devices_crear_id"

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from apps.actives.models import Computers, PassiveDevices,Monitors
+from ckeditor_uploader.fields import  RichTextUploadingField
 
 TYPE_ASSIGNMENT=(
 	("Contrato fijo","Contrato fijo"),
@@ -36,14 +37,9 @@ class AssignUsers(models.Model):
     computers=models.ForeignKey(Computers, on_delete=models.CASCADE, verbose_name=u'Equipo asignado',null=True,blank=True,)
     passive_devices=models.ManyToManyField(PassiveDevices, verbose_name=u'Dispositivos asignados',blank=True)
     monitor=models.ForeignKey(Monitors, on_delete=models.CASCADE,null=True,blank=True, verbose_name=u'Monitor asignado')
+    description=RichTextUploadingField('Descripción de entrega y carga de imágenes',max_length=30000,null=True,blank=True,)
 
-    image_up_pc=models.ImageField(upload_to="assign_user",null=True, blank=True, verbose_name=u'Imagen Equipo superior')
-    image_front_pc=models.ImageField(upload_to="assign_user",null=True, blank=True, verbose_name=u'Imagen Equipo frontal')
-    image_back_pc=models.ImageField(upload_to="assign_user",null=True, blank=True, verbose_name=u'Imagen Equipo debajo')
-    image_monitor=models.ImageField(upload_to="assign_user",null=True, blank=True, verbose_name=u'Imagen monitor')
-    image_keyboard=models.ImageField(upload_to="assign_user",null=True, blank=True, verbose_name=u'Imagen teclado')
-    image_devices=models.ImageField(upload_to="assign_user",null=True, blank=True, verbose_name=u'Imagen dispositivos')
-    image_others=models.ImageField(upload_to="assign_user",null=True, blank=True, verbose_name=u'Imagen Otros elementos')
+
 
     
     class Meta:

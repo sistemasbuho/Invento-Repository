@@ -6,7 +6,11 @@
 {% block stylesheets %}
 
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-
+  <style>
+    #cke_id_description{
+       width: auto !important;
+     }
+   </style>
 {% endblock stylesheets %}
 
 {% block content %}
@@ -33,7 +37,7 @@
       <div class=" mx-auto">
         <div class="card-header">
           <div class="row align-items-center">
-            <div class="col-8">
+            <div class="col-10">
               <h3 class="mb-0">Asignación de elementos </h3>
             </div>
             <div class="col-4 text-right">
@@ -46,14 +50,14 @@
             <h6 class="heading-small mb-4">Datos Generales</h6>
             <div class="pl-lg-4">
               <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-name">Usuario</label>
                     {{form.assignment}}
                   </div>
                 </div>
 
-                <div class="col-lg-12">
+                <div class="col-lg-6">
                     <div class="form-group">
                       <label class="form-control-label" for="input-name">{{form.user.label}}</label>
                       {{form.user}}
@@ -67,14 +71,14 @@
                     </div>
                   </div>
 
-                  <div class="col-lg-12">
+                  <div class="col-lg-6">
                     <div class="form-group">
                       <label class="form-control-label" for="input-name">{{form.computers.label}}</label>
                       {{form.computers}}
                     </div>
                   </div>
 
-                  <div class="col-lg-12">
+                  <div class="col-lg-6">
                     <div class="form-group">
                       <label class="form-control-label" for="input-name">{{form.monitor.label}}</label>
                       {{form.monitor}}
@@ -86,7 +90,15 @@
                       <label class="form-control-label" for="input-name">{{form.passive_devices.label}}</label>
                       {{form.passive_devices}}
                       <div class="error_message" id="passive_devices_error"> {{ form.passive_devices.error}} </div>
-                    </div>                   
+                    </div>      
+                    
+                    <div class="col-lg-12">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-name">{{form.description.label}}</label>
+                        {{form.description}}
+                        <div class="error_message" id="description_error"> {{ form.description.error}} </div>
+                      </div>   
+                      
                   </div>
 
               </div>
@@ -167,4 +179,6 @@
   BuscarPorNombreModeloMultiple('#passive_devices_crear_id', '{% url "users:search_passive_devices" %}');
 
 </script>
+
+
 {% endblock javascripts %}

@@ -1,5 +1,5 @@
 from datetime import datetime
-from django.shortcuts import redirect
+from django.shortcuts import redirect,render
 from django.views.generic import ListView ,  UpdateView,View
 from django.urls import reverse,reverse_lazy
 from .models import *
@@ -76,10 +76,59 @@ class UpdateAssigment(_FormValid,UpdateView):
 	template_name = 'assignment/update_assign.html'
 	context_object_name = 'user_list'
 	form_class = FormAssignUpdate  
-	queryset = AssignUsers.objects.all()
 	success_message = '¡El registro fue actualizado correctamente!'
 	error_message = 'No se actualizó el registro'
- 
+
+	def get_form(self,*args,**kwargs):
+		instance = self.get_object()
+		form = self.form_class(instance=instance)
+		form.fields['passive_devices'].queryset = instance.passive_devices.all() 
+		return form
+
+	def post(self,request,*args,**kwargs):
+		form_header = dict(request.POST.lists())
+  
+		if 'passive_devices' not in form_header:
+			#capturo los ids de actor (manytomany)
+			passive_devices_query = PassiveDevices.objects.none()
+
+		else:
+			#sino capturo todo los valores
+			passive_devices_query = PassiveDevices.objects.filter(pk__in=form_header['passive_devices']) 
+
+		#cargo los datos del formulario
+		form = self.form_class(request.POST, instance = self.get_object()) #get_object: hace una petición get para obtener el id para no usar una consulta
+		form.fields['passive_devices'].queryset = passive_devices_query
+
+		if form.is_valid():
+
+   			# capturamos los datos del formulario inicial
+			get_form_start = self.get_form(self)
+			pasivo_original = get_form_start.fields['passive_devices'].queryset
+			
+			try:
+				pasivo_actualizado = PassiveDevices.objects.filter(pk__in=form_header['passive_devices'])
+			except KeyError:
+				pasivo_actualizado = PassiveDevices.objects.none()
+    
+			_difference = set(pasivo_original).difference(set(pasivo_actualizado))
+
+			if _difference:
+				for device in _difference:
+					PassiveDevices.objects.filter(pk=device.id).update(state="Activo disponible")
+
+			else:
+				PassiveDevices.objects.filter(pk__in=form_header['passive_devices']).update(state="Activo asignado")
+			
+			form.save()
+
+			return self.form_valid(form)
+
+		else:
+			self.form_invalid(form)
+		return redirect(str(self.success_url))
+
+
 	def get_success_url(self):
 		pk = self.kwargs["pk"]
 		return reverse("users:detail_users", kwargs={"pk": pk})
