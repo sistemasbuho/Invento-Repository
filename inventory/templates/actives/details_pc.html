@@ -35,8 +35,8 @@
               <h3 class="mb-0">DETALLES EQUIPO {{computers_list.name}}  </h3>
             </div>
             <div class="col-6 text-right">
-              <a href="{% url 'actives:update_computer' computers_list.id %}" class="btn btn-sm btn-light"> Editar</a>
-            <a href="{% url 'actives:register_maintenance' %}" class="btn btn-sm btn-info"> <i class="ni ni-settings text-orange"></i> Agregar mantenimiento</a>
+              <a href="{% url 'actives:update_computer' computers_list.id %}" class="btn btn-sm btn-primary"> Editar</a>
+            <a href="{% url 'actives:register_maintenance_computer' %}" class="btn btn-sm btn-info"> <i class="ni ni-settings "></i> Agregar mantenimiento</a>
             <a href="{{request.META.HTTP_REFERER}}"class="btn btn-sm btn-light">Regresar</a>
 
           </div>
@@ -179,7 +179,7 @@
                     {% for maintenances in third_queryset %}
 
                     <tr>
-                      <td scope="row"> {{maintenances}}</td>
+                      <td scope="row"> {{maintenances.computer}}</td>
                       <td scope="row"> {{maintenances.maintenance_type}}</td>
                       <td scope="row"> {{maintenances.priority}}</td>
                       <td scope="row"> <span class="badge badge-success"> {{maintenances.maintenance_state}} </span> </td>
@@ -187,12 +187,10 @@
                       <td scope="row"> {{maintenances.end_maintenance}}</td>
                       <td class="">
                         <div class="dropdown">
-                          <a class="btn btn-sm " href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-ellipsis-v pr-1"></i> Acciones
+                          <a class="btn btn-sm btn-light" href="{% url 'actives:update_computer_maintenance' maintenances.id  %}">
+                            <i class="fas fa-ellipsis-v pr-1"></i> Editar
                           </a>
-                          <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                            <a class="dropdown-item" href=" "><i class="ni ni-tag text-orange"></i> Editar</a>
-                          </div>
+                 
                         </div>
                       </td>
                     </tr>

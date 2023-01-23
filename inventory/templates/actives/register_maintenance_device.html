@@ -28,7 +28,7 @@
         <div class="card-header">
           <div class="row align-items-center">
             <div class="col-8">
-              <h3 class="mb-0">Registro de Mantenimientos Equipos </h3>
+              <h3 class="mb-0">Registro de Mantenimientos Dispositivos </h3>
             </div>
             <div class="col-4 text-right">
               <a href="{{request.META.HTTP_REFERER}}"class="btn btn-sm btn-light">Regresar</a>
@@ -42,11 +42,12 @@
               <div class="row">
                 <div class="col-lg-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-name">{{form.computer.label}}</label>
-                    {{form.computer}}
+                    <label class="form-control-label" for="input-name">{{form.device.label}}</label>
+                    {{form.device}}
                   </div>
                 </div>
 
+                
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-user">{{form.user.label}}</label>
@@ -61,15 +62,13 @@
                   </div>
                 </div>
 
-      
-                
                 <div class="col-lg-4">
                   <div class="form-group">
                     <label class="form-control-label" for="input-priority">{{form.priority.label}}</label>
                     {{form.priority}}
                   </div>
                 </div>
-
+                
                 <div class="col-lg-4">
                   <div class="form-group">
                     <label class="form-control-label" for="input-maintenance_state">{{form.maintenance_state.label}}</label>

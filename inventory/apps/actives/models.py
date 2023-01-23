@@ -139,8 +139,6 @@ class EquipmentMaintenance(models.Model):
     maintenance_state=models.CharField(max_length=20, choices=STATE_PROCESS, default="Pendiente", verbose_name=u'Estado Proceso')
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=u'Encargado')
 
-
-
     def __str__(self):
         return self.solution_description   
 
@@ -151,19 +149,17 @@ class EquipmentMaintenance(models.Model):
 
 class DevicesMaintenance(models.Model):
     creation_date=models.DateField(auto_now_add=True,verbose_name=u'Fecha de registro')
-    device=models.ForeignKey(PassiveDevices, on_delete=models.CASCADE, null=True, blank=True,verbose_name=u'Computador')
-    maintenance_type=models.CharField(max_length=20, choices=TYPE_MAINTENANCE, default="Por definir", blank=True,null=True,verbose_name=u'Tipo Proceso')
-    start_maintenance=models.DateField(verbose_name=u'Fecha de inicio mantenimiento',blank=True,null=True)
+    device=models.ForeignKey(PassiveDevices, on_delete=models.CASCADE,verbose_name=u'Dispositivo')
+    maintenance_type=models.CharField(max_length=20, choices=TYPE_MAINTENANCE, default="Por definir",verbose_name=u'Tipo Proceso')
+    start_maintenance=models.DateField(verbose_name=u'Fecha de inicio mantenimiento')
     end_maintenance=models.DateField(verbose_name=u'Fecha de fin mantenimiento',blank=True,null=True)
     solution_description=models.TextField('Mantenimiento y solución',max_length=5000,blank=True,null=True)
     problem_description=models.TextField('Problema y condiciones iniciales',max_length=5000,blank=True,null=True)
     added_parts=models.TextField('Piezas añadidas',max_length=5000,blank=True,null=True)
     description=models.TextField('Observaciones',max_length=5000,blank=True,null=True)
-    priority=models.CharField(max_length=20, choices=PRIORITY, default="Por definir", blank=True,null=True,verbose_name=u'Prioridad')
-    maintenance_state=models.CharField(max_length=20, choices=STATE_PROCESS, default="Pendiente", blank=True,null=True,verbose_name=u'Estado Proceso')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=u'Encargado',blank=True,null=True)
-
-
+    priority=models.CharField(max_length=20, choices=PRIORITY, default="Por definir",verbose_name=u'Prioridad')
+    maintenance_state=models.CharField(max_length=20, choices=STATE_PROCESS, default="Pendiente", verbose_name=u'Estado Proceso')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=u'Encargado')
 
     def __str__(self):
         return self.solution_description   
@@ -192,3 +188,25 @@ class Monitors(models.Model):
     class Meta:
         verbose_name = "Monitor"
         verbose_name_plural = "Monitores"
+
+
+class MonitorsMaintenance(models.Model):
+    creation_date=models.DateField(auto_now_add=True,verbose_name=u'Fecha de registro')
+    monitor=models.ForeignKey(Monitors, on_delete=models.CASCADE,verbose_name=u'Monitor')
+    maintenance_type=models.CharField(max_length=20, choices=TYPE_MAINTENANCE, default="Por definir",verbose_name=u'Tipo Proceso')
+    start_maintenance=models.DateField(verbose_name=u'Fecha de inicio mantenimiento')
+    end_maintenance=models.DateField(verbose_name=u'Fecha de fin mantenimiento',blank=True,null=True)
+    solution_description=models.TextField('Mantenimiento y solución',max_length=5000,blank=True,null=True)
+    problem_description=models.TextField('Problema y condiciones iniciales',max_length=5000,blank=True,null=True)
+    added_parts=models.TextField('Piezas añadidas',max_length=5000,blank=True,null=True)
+    description=models.TextField('Observaciones',max_length=5000,blank=True,null=True)
+    priority=models.CharField(max_length=20, choices=PRIORITY, default="Por definir",verbose_name=u'Prioridad')
+    maintenance_state=models.CharField(max_length=20, choices=STATE_PROCESS, default="Pendiente", verbose_name=u'Estado Proceso')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=u'Encargado')
+
+    def __str__(self):
+        return self.solution_description   
+
+    class Meta:
+        verbose_name = "Mantenimiento Dispositivo"
+        verbose_name_plural = "Mantenimientos Dispositivos"

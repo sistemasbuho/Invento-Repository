@@ -58,7 +58,7 @@
                   <td scope="row"> {{user.assignment.dni_user}}</td>
                   <td scope="row"> {{user.assignment.email_user}}</td>
                   <td scope="row"> <span class="badge badge-success"> {{user.assignment.type_assignment}} </span> </td>
-                  <td scope="row"> {{user.computers|default_if_none:"Sin monitor"}}</td>
+                  <td scope="row"> {{user.computers|default_if_none:"Sin equipo"}}</td>
                   <td scope="row"> {{user.monitor|default_if_none:"Sin monitor"}}</td>
                   <td scope="row"> {% for place in user.passive_devices.all %} {{place.name}} {% endfor %}</td>
 

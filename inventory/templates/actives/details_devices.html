@@ -33,8 +33,10 @@
               <h3 class="mb-0">DETALLES DISPOSITIVO {{computers_list.name}}  </h3>
             </div>
             <div class="col-6 text-right">
-              <a href="{% url 'actives:update_computer' computers_list.id %}" class="btn btn-sm btn-light"> Editar</a>
-            <a href="{% url 'actives:register_maintenance' %}" class="btn btn-sm btn-info"> <i class="ni ni-settings "></i> Agregar mantenimiento</a>
+              <a href="{% url 'actives:update_device' computers_list.id %}" class="btn btn-sm btn-primary"> Editar</a>
+            <a href="{% url 'actives:register_maintenance_device' %}" class="btn btn-sm btn-info"> <i class="ni ni-settings "></i> Agregar mantenimiento</a>
+            <a href="{{request.META.HTTP_REFERER}}"class="btn btn-sm btn-light">Regresar</a>
+
           </div>
         </div>
       </div>
@@ -46,7 +48,7 @@
               <div class="row">
 
                   <div class="col-md-5">
-                   <img src="https://resource.logitech.com/w_800,c_lpad,ar_16:9,q_auto,f_auto,dpr_1.0/d_transparent.gif/content/dam/logitech/en/products/combos/mk295-keyboard-mouse-combo/gallery/mk295-graphite-gallery-01-new.png?v=1" width="300" > 
+                    <img src="{{computers_list.manufacturer.product_image.url}}" width="300" alt="My image">
                   </div>
 
                   <div class="col-md-7 row">
@@ -114,7 +116,8 @@
 
             {% endfor %}
 
-             <hr class="my-4" />
+            
+            <hr class="my-4" />
             <!-- Description -->
             <h6 class="heading-small mb-4">Mantenimientos</h6>
             <div class="col-md-12">
@@ -124,7 +127,7 @@
     
                   <thead class="thead-light">
                     <tr>
-                      <th scope="col" class="sort" data-sort="name">Equipo</th>
+                      <th scope="col" class="sort" data-sort="name">Dispositivos</th>
                       <th scope="col" class="sort" data-sort="budget">Tipo</th>
                       <th scope="col" class="sort" data-sort="budget">Prioridad</th>
                       <th scope="col" class="sort" data-sort="status">Estado</th>
@@ -138,7 +141,7 @@
                     {% for maintenances in third_queryset %}
 
                     <tr>
-                      <td scope="row"> {{maintenances}}</td>
+                      <td scope="row"> {{maintenances.device}}</td>
                       <td scope="row"> {{maintenances.maintenance_type}}</td>
                       <td scope="row"> {{maintenances.priority}}</td>
                       <td scope="row"> <span class="badge badge-success"> {{maintenances.maintenance_state}} </span> </td>
@@ -146,12 +149,59 @@
                       <td scope="row"> {{maintenances.end_maintenance}}</td>
                       <td class="">
                         <div class="dropdown">
+                          <a class="btn btn-sm btn-light" href="{% url 'actives:update_device_maintenance' maintenances.id %}">
+                            <i class="fas fa-ellipsis-v pr-1"></i> Editar1
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                   
+                    {% endfor %}
+                    
+           
+                   
+              
+                  </tbody>
+                </table>
+              </div>
+
+             </div>
+
+
+            <hr class="my-4" />
+            <!-- Description -->
+            <h6 class="heading-small mb-4">Asignacion(es)</h6>
+            <div class="col-md-12">
+              <div class="table-responsive">
+               <table id="example1" class="table  table-hover dataTable">
+    
+                  <thead class="thead-light">
+                    <tr>
+                      <th scope="col" class="sort" data-sort="name">Usuario</th>
+                      <th scope="col" class="sort" data-sort="budget">CC</th>
+                      <th scope="col" class="sort" data-sort="budget">Dispositivo</th>
+                      <th scope="col" class="sort" data-sort="status">Fecha asignación</th>
+                      <th scope="col" class="sort" data-sort="status">Encargado</th>
+                      <th scope="col" class="sort" data-sort="status">Acciones</th>
+                 
+                    </tr>
+                  </thead>
+                  <tbody class="list">
+                    {% for assign in assign_queryset %}
+
+                    <tr>
+                      <td scope="row"> {{assign.assignment}}</td>
+                      <td scope="row"> {{assign.assignment.dni_user}}</td>
+                      <td scope="row"> {% for place in assign.passive_devices.all %} |{{place.name}}| {% endfor %}</td>
+                      <td scope="row"> <span class="badge badge-success"> {{assign.date_assignment}} </span> </td>
+                      <td scope="row"> {{assign.user}}</td>
+                      <td class="">
+                        <div class="dropdown">
                           <a class="btn btn-sm " href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-ellipsis-v pr-1"></i> Acciones
                           </a>
                           <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                            <a class="dropdown-item" href=" "><i class="ni ni-tag text-orange"></i> Editar</a>
-                            <a class="dropdown-item" href="#"><i class="ni ni-settings text-primary"></i> Mantenimientos</a>
+                            <a class="dropdown-item" href=" "><i class="ni ni-tag text-orange"></i> Generar acta</a>
                           </div>
                         </div>
                       </td>
@@ -168,58 +218,7 @@
 
              </div>
 
-             <hr class="my-4" />
-             <!-- Description -->
-             <h6 class="heading-small mb-4">Asignaciones</h6>
-             <div class="col-md-12">
-               <div class="table-responsive">
-                <a href="{{request.META.HTTP_REFERER}}"class="btn btn-sm btn-light">Regresar</a>
-                <table id="example1" class="table  table-hover dataTable">
-     
-                   <thead class="thead-light">
-                     <tr>
-                       <th scope="col" class="sort" data-sort="name">Usuario</th>
-                       <th scope="col" class="sort" data-sort="budget">CC</th>
-                       <th scope="col" class="sort" data-sort="budget">Dispositivo</th>
-                       <th scope="col" class="sort" data-sort="status">Fecha asignación</th>
-                       <th scope="col" class="sort" data-sort="status">Encargado</th>
-                       <th scope="col" class="sort" data-sort="status">Dispositivos</th>
-                       <th scope="col" class="sort" data-sort="status">Acciones</th>
-                  
-                     </tr>
-                   </thead>
-                   <tbody class="list">
-                     {% for assign in assign_queryset %}
- 
-                     <tr>
-                       <td scope="row"> {{assign.assignment}}</td>
-                       <td scope="row"> {{assign.assignment.dni_user}}</td>
-                       <td scope="row"> {{assign.passive_devices}}</td>
-                       <td scope="row"> <span class="badge badge-success"> {{assign.computers.state}} </span> </td>
-                       <td scope="row"> {{assign.user}}</td>
-                       <td scope="row"> {{assign.date_assignment}}</td>
-                       <td class="">
-                         <div class="dropdown">
-                           <a class="btn btn-sm " href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                             <i class="fas fa-ellipsis-v pr-1"></i> Acciones
-                           </a>
-                           <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                             <a class="dropdown-item" href=" "><i class="ni ni-tag text-orange"></i> Generar acta</a>
-                           </div>
-                         </div>
-                       </td>
-                     </tr>
-                    
-                     {% endfor %}
-                     
-            
-                    
-               
-                   </tbody>
-                 </table>
-               </div>
- 
-              </div>
+
 
         </div>
       </div>

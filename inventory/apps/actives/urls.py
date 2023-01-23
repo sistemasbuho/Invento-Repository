@@ -5,9 +5,11 @@ from django.conf.urls.static import static
 urlpatterns = [
 
 	path('register/', registerComputer.as_view(), name='register'),
- 	path('register/maintenance/', registerMaintenance.as_view(), name='register_maintenance'),
+ 	path('register/maintenance/computer/', registerMaintenance.as_view(), name='register_maintenance_computer'),
+   	path('register/maintenance/device/', registerMaintenanceDevices.as_view(), name='register_maintenance_device'),
+ 	path('register/maintenance/monitor/', registerMaintenanceMonitor.as_view(), name='register_maintenance_monitor'),
+
     path('register/manufacturer/', registerManufacturer.as_view(), name='register_manufacturer'),
-    # path('register/model/', registerModel.as_view(), name='register_model'),
     path('register/model/', registerModelImage, name='register_model'),
     path('register/type/', registerTypes.as_view(), name='register_type'),
    	path('register/devices/', registerDevices.as_view(), name='register_devices'),
@@ -17,6 +19,11 @@ urlpatterns = [
  	path('update/computer/<int:pk>', UpdateComputer.as_view(), name='update_computer'),
    	path('update/device/<int:pk>', UpdateDevice.as_view(), name='update_device'),
    	path('update/monitor/<int:pk>', UpdateMonitor.as_view(), name='update_monitor'),
+    path('update/monitor/maintenance/<int:pk>', UpdateMonitorMaintenance.as_view(), name='update_monitor_maintenance'),
+    path('update/computer/maintenance/<int:pk>', UpdateComputerMaintenance.as_view(), name='update_computer_maintenance'),
+    path('update/device/maintenance/<int:pk>', UpdateDeviceMaintenance.as_view(), name='update_device_maintenance'),
+
+
 
  	path('list/', ListComputers.as_view(), name='visualize'),
  	path('list/devices/', ListDevices.as_view(), name='visualize_devices'),

@@ -21,18 +21,20 @@
 
 <div class="col-md-12 d-flex justify-content-center">
 
-  <div class="col-md-11 card">
+  <div class="col-md-10 card">
 
     <div class=" ">
       <div class=" mx-auto">
         <div class="card-header">
           <div class="row align-items-center">
-            <div class="col-8">
+            <div class="col-5">
               <h3 class="mb-0">Registro de modelos </h3>
             </div>
-            <div class="col-4 text-right">
-              <a href="{% url 'actives:register_manufacturer' %}"  class="btn btn-sm btn-primary">Agregar nuevo fabricante</a>           </div>
+            <div class="col-7 text-right">
+              <a href="{% url 'actives:register_manufacturer' %}"  class="btn btn-sm btn-primary">Agregar fabricante</a> 
               <a href="{{request.META.HTTP_REFERER}}"class="btn btn-sm btn-light">Regresar</a>
+
+             </div>
 
           </div>
         </div>
@@ -43,10 +45,17 @@
             <div class="pl-lg-4">
               <div class="row">
 
-                <div class="col-lg-12">
+                <div class="col-lg-6">
                     <div class="form-group">
                       <label class="form-control-label" for="input-manufacturer">{{form.manufacturer.label}}</label>
                       {{form.manufacturer}}
+                    </div>
+                  </div>
+
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-type_model">{{form.type_model.label}}</label>
+                      {{form.type_model}}
                     </div>
                   </div>
 
@@ -57,12 +66,7 @@
                   </div>
                 </div>
 
-                <div class="col-lg-12">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-type_model">{{form.type_model.label}}</label>
-                    {{form.type_model}}
-                  </div>
-                </div>
+               
 
                 <div class="col-lg-12">
                     <div class="form-group">

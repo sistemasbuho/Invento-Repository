@@ -33,8 +33,8 @@
               <h3 class="mb-0">DETALLES DISPOSITIVO {{computers_list.name}}  </h3>
             </div>
             <div class="col-6 text-right">
-              <a href="{% url 'actives:update_monitor' computers_list.id %}" class="btn btn-sm btn-light"> Editar</a>
-            <a href="{% url 'actives:register_maintenance' %}" class="btn btn-sm btn-info"> <i class="ni ni-settings "></i> Agregar mantenimiento</a>
+              <a href="{% url 'actives:update_monitor' computers_list.id %}" class="btn btn-sm btn-primary"> Editar</a>
+            <a href="{% url 'actives:register_maintenance_monitor' %}" class="btn btn-sm btn-info"> <i class="ni ni-settings "></i> Agregar mantenimiento</a>
             <a href="{{request.META.HTTP_REFERER}}"class="btn btn-sm btn-light">Regresar</a>
 
           </div>
@@ -120,7 +120,7 @@
     
                   <thead class="thead-light">
                     <tr>
-                      <th scope="col" class="sort" data-sort="name">Equipo</th>
+                      <th scope="col" class="sort" data-sort="name">Monitor</th>
                       <th scope="col" class="sort" data-sort="budget">Tipo</th>
                       <th scope="col" class="sort" data-sort="budget">Prioridad</th>
                       <th scope="col" class="sort" data-sort="status">Estado</th>
@@ -134,7 +134,7 @@
                     {% for maintenances in third_queryset %}
 
                     <tr>
-                      <td scope="row"> {{maintenances}}</td>
+                      <td scope="row"> {{maintenances.monitor}}</td>
                       <td scope="row"> {{maintenances.maintenance_type}}</td>
                       <td scope="row"> {{maintenances.priority}}</td>
                       <td scope="row"> <span class="badge badge-success"> {{maintenances.maintenance_state}} </span> </td>
@@ -142,12 +142,9 @@
                       <td scope="row"> {{maintenances.end_maintenance}}</td>
                       <td class="">
                         <div class="dropdown">
-                          <a class="btn btn-sm " href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-ellipsis-v pr-1"></i> Acciones
+                          <a class="btn btn-sm btn-light" href="{% url 'actives:update_monitor_maintenance' maintenances.pk %}">
+                            <i class="fas fa-ellipsis-v pr-1"></i> Editar
                           </a>
-                          <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                            <a class="dropdown-item" href=" "><i class="ni ni-tag text-orange"></i> Editar</a>
-                            <a class="dropdown-item" href="#"><i class="ni ni-settings text-primary"></i> Mantenimientos</a>
                           </div>
                         </div>
                       </td>
@@ -181,7 +178,6 @@
                        <th scope="col" class="sort" data-sort="status">Estado</th>
                        <th scope="col" class="sort" data-sort="status">Encargado</th>
                        <th scope="col" class="sort" data-sort="status">Fecha asignación</th>
-                       <th scope="col" class="sort" data-sort="status">Acciones</th>
                   
                      </tr>
                    </thead>
@@ -191,20 +187,11 @@
                      <tr>
                        <td scope="row"> {{assign.assignment}}</td>
                        <td scope="row"> {{assign.assignment.dni_user}}</td>
-                       <td scope="row"> {{assign.computers}}</td>
-                       <td scope="row"> <span class="badge badge-success"> {{assign.computers.state}} </span> </td>
+                       <td scope="row"> {{assign.monitor}}</td>
+                       <td scope="row"> <span class="badge badge-success"> {{assign.monitor.state}} </span> </td>
                        <td scope="row"> {{assign.user}}</td>
                        <td scope="row"> {{assign.date_assignment}}</td>
-                       <td class="">
-                         <div class="dropdown">
-                           <a class="btn btn-sm " href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                             <i class="fas fa-ellipsis-v pr-1"></i> Acciones
-                           </a>
-                           <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                             <a class="dropdown-item" href=" "><i class="ni ni-tag text-orange"></i> Generar acta</a>
-                           </div>
-                         </div>
-                       </td>
+                     
                      </tr>
                     
                      {% endfor %}

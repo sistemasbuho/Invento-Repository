@@ -116,6 +116,20 @@ class registerMaintenance(registerComputer):
     form_class = FormMaintenanceRegister
     template_name = 'actives/register_maintenance.html'
     success_url = reverse_lazy('actives:register_maintenance')
+
+
+class registerMaintenanceDevices(registerComputer):
+    model = DevicesMaintenance
+    form_class = FormMaintenanceRegisterDevice
+    template_name = 'actives/register_maintenance_device.html'
+    success_url = reverse_lazy('actives:register_maintenance_device')
+ 
+ 
+class registerMaintenanceMonitor(registerComputer):
+    model = MonitorsMaintenance
+    form_class = FormMaintenanceRegisterMonitor
+    template_name = 'actives/register_maintenance_monitor.html'
+    success_url = reverse_lazy('actives:register_maintenance_monitor')
  
  
 class registerTypes(registerComputer):
@@ -184,7 +198,7 @@ class MonitorDetailView(ListView):
     def get_context_data(self, **kwargs):
         context = super(MonitorDetailView, self).get_context_data(**kwargs)
         context['second_queryset'] = Monitors.objects.filter(id = self.kwargs['pk'])
-        context['third_queryset'] = DevicesMaintenance.objects.filter(device = self.kwargs['pk'])
+        context['third_queryset'] =  MonitorsMaintenance.objects.filter(monitor = self.kwargs['pk'])
         context['assign_queryset'] = AssignUsers.objects.filter(monitor = self.kwargs['pk'])
 
         return context
@@ -204,6 +218,18 @@ class UpdateComputer(_FormValid,UpdateView):
         return reverse("actives:update_computer", kwargs={"pk": pk})
 
 
+class UpdateComputerMaintenance(UpdateComputer):
+    model = EquipmentMaintenance
+    form_class = FormMaintenanceRegister
+    template_name = 'actives/register_maintenance.html'
+    queryset = EquipmentMaintenance.objects.all()
+
+    def get_success_url(self):
+        pk = self.kwargs["pk"]
+        return reverse("actives:details_computer", kwargs={"pk": pk})
+
+
+
 class UpdateDevice(UpdateComputer):
     model = PassiveDevices
     template_name = 'actives/update_device.html'
@@ -214,6 +240,29 @@ class UpdateDevice(UpdateComputer):
     def get_success_url(self):
         pk = self.kwargs["pk"]
         return reverse("actives:update_device", kwargs={"pk": pk})
+   
+    
+class UpdateDeviceMaintenance(UpdateComputer):
+    model = DevicesMaintenance
+    form_class = FormMaintenanceRegisterDevice
+    template_name = 'actives/register_maintenance_device.html'
+    queryset = DevicesMaintenance.objects.all()
+
+    def get_success_url(self):
+        pk = self.kwargs["pk"]
+        return reverse("actives:details_device", kwargs={"pk": pk})
+
+
+class UpdateMonitorMaintenance(UpdateComputer):
+    model = MonitorsMaintenance
+    form_class = FormMaintenanceRegisterMonitor
+    template_name = 'actives/register_maintenance_monitor.html'
+    queryset = MonitorsMaintenance.objects.all()
+
+    def get_success_url(self):
+        pk = self.kwargs["pk"]
+        return reverse("actives:details_monitor", kwargs={"pk": pk})
+
 
 
 class UpdateMonitor(UpdateComputer):

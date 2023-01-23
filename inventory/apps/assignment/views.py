@@ -165,10 +165,11 @@ def render_to_pdf(template_src, context_dict={}):
 
 class GeneratePdf(View):
     def get(self, request, *args, **kwargs):
+        data_user=AssignUsers.objects.filter(id=self.kwargs['pk'])
+
         data = {
-            'amount': 39.99,
-            'customer_name': 'Cooper Mann',
-            'order_id': 1233434,
+            'fecha': datetime.today(),
+            'customer': data_user,
         }
         pdf = render_to_pdf('assignment/generate_act.html', data)
         return HttpResponse(pdf, content_type='application/pdf')

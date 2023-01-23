@@ -344,7 +344,7 @@ class FormTypesRegister(forms.ModelForm):
 class FormMaintenanceRegister(forms.ModelForm):
 	class Meta:
 		model = EquipmentMaintenance
-		fields=['computer','maintenance_type','start_maintenance','end_maintenance','solution_description','problem_description','added_parts','description','priority','maintenance_state']
+		fields=['user','computer','maintenance_type','start_maintenance','end_maintenance','solution_description','problem_description','added_parts','description','priority','maintenance_state']
   
 		widgets = {
 				'computer':forms.Select(
@@ -353,6 +353,180 @@ class FormMaintenanceRegister(forms.ModelForm):
 					'placeholder':'',
 					'id':'computer' }),
     
+    			'priority':forms.Select(
+				attrs={
+					'class':'form-control',
+					'placeholder':'',
+					'id':'priority' }),
+    
+    			'maintenance_state':forms.Select(
+				attrs={
+					'class':'form-control',
+					'placeholder':'',
+					'id':'maintenance_state' }),
+
+
+				'maintenance_type':forms.Select(
+							attrs={
+								'class':'form-control',
+								'placeholder':'Tipo de mantenimiento',
+								'id':'maintenance_type' }),
+    
+    			'user':forms.Select(
+							attrs={
+								'class':'form-control',
+								'placeholder':'',
+								'id':'user' }),
+     
+				
+    			'start_maintenance':forms.DateInput(
+							format=('%Y-%m-%d'),
+								attrs={
+								'class': 'form-control', 
+								'placeholder': 'yy-mm-dd',
+								'type': 'date'}),
+       
+				'end_maintenance':forms.DateInput(
+						format=('%Y-%m-%d'),
+							attrs={
+							'class': 'form-control', 
+							'placeholder': 'yy-mm-dd',
+							'type': 'date'}),
+    
+    			'description':forms.Textarea(
+				attrs={
+					'class':'form-control',
+					'placeholder':'Puede incluir cualquier otra característica: Rayones, defectos de fábrica, dispositivos incluidos, fallas incorregibles, etc',
+					'id':'description', 
+					'rows':5, 
+     			}),
+          
+                'solution_description':forms.Textarea(
+				attrs={
+					'class':'form-control',
+					'placeholder':'Describa de manera técnica, la solución dada al problema',
+					'id':'solution_description', 
+					'rows':5, 
+     			}),
+             
+                'problem_description':forms.Textarea(
+				attrs={
+					'class':'form-control',
+					'placeholder':'Describa el problema de manera técnica, en que condiciones recibe el equipo',
+					'id':'problem_description', 
+					'rows':5, 
+     			}),
+                
+                'added_parts':forms.Textarea(
+				attrs={
+					'class':'form-control',
+					'placeholder':'Incluya todas las piezas añadidas, cambiadas o removidas para este mantenimiento',
+					'id':'added_parts', 
+					'rows':5, 
+     			}),
+		}
+
+
+class FormMaintenanceRegisterDevice(forms.ModelForm):
+	class Meta:
+		model = DevicesMaintenance
+		fields=['user','device','maintenance_type','start_maintenance','end_maintenance','solution_description','problem_description','added_parts','description','priority','maintenance_state']
+  
+		widgets = {
+				'device':forms.Select(
+				attrs={
+					'class':'form-control',
+					'placeholder':'',
+					'id':'device' }),
+    
+    
+    			'priority':forms.Select(
+				attrs={
+					'class':'form-control',
+					'placeholder':'',
+					'id':'priority' }),
+    
+    			'maintenance_state':forms.Select(
+				attrs={
+					'class':'form-control',
+					'placeholder':'',
+					'id':'maintenance_state' }),
+
+
+				'maintenance_type':forms.Select(
+							attrs={
+								'class':'form-control',
+								'placeholder':'Tipo de mantenimiento',
+								'id':'maintenance_type' }),
+    
+    			'user':forms.Select(
+							attrs={
+								'class':'form-control',
+								'placeholder':'',
+								'id':'user' }),
+     
+				
+    			'start_maintenance':forms.DateInput(
+							format=('%Y-%m-%d'),
+								attrs={
+								'class': 'form-control', 
+								'placeholder': 'yy-mm-dd',
+								'type': 'date'}),
+       
+				'end_maintenance':forms.DateInput(
+						format=('%Y-%m-%d'),
+							attrs={
+							'class': 'form-control', 
+							'placeholder': 'yy-mm-dd',
+							'type': 'date'}),
+    
+    			'description':forms.Textarea(
+				attrs={
+					'class':'form-control',
+					'placeholder':'Puede incluir cualquier otra característica: Rayones, defectos de fábrica, dispositivos incluidos, fallas incorregibles, etc',
+					'id':'description', 
+					'rows':5, 
+     			}),
+          
+                'solution_description':forms.Textarea(
+				attrs={
+					'class':'form-control',
+					'placeholder':'Describa de manera técnica, la solución dada al problema',
+					'id':'solution_description', 
+					'rows':5, 
+     			}),
+             
+                'problem_description':forms.Textarea(
+				attrs={
+					'class':'form-control',
+					'placeholder':'Describa el problema de manera técnica, en que condiciones recibe el equipo',
+					'id':'problem_description', 
+					'rows':5, 
+     			}),
+                
+                'added_parts':forms.Textarea(
+				attrs={
+					'class':'form-control',
+					'placeholder':'Incluya todas las piezas añadidas, cambiadas o removidas para este mantenimiento',
+					'id':'added_parts', 
+					'rows':5, 
+     			}),
+		}
+
+
+class FormMaintenanceRegisterMonitor(forms.ModelForm):
+	class Meta:
+		model = MonitorsMaintenance
+		fields=['user','monitor','maintenance_type','start_maintenance','end_maintenance','solution_description','problem_description','added_parts','description','priority','maintenance_state']
+  
+		widgets = {
+				'monitor':forms.Select(
+				attrs={
+					'class':'form-control',
+					'placeholder':'',
+					'id':'monitor' }),
+    
+
     			'priority':forms.Select(
 				attrs={
 					'class':'form-control',
