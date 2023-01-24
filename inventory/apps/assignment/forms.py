@@ -141,9 +141,16 @@ class FormAssignUpdate(forms.ModelForm):
 		# https://stackoverflow.com/questions/610883/how-do-i-check-if-an-object-has-an-attribute
 		hasattr(kwargs['instance'], 'monitor_id')
 
-		# query_monitor_activo_disponible = Monitors.objects.filter(state="Activo disponible")
-		# if kwargs['instance'].monitor:
-		# 	query_monitor_pk = Monitors.objects.filter(pk=kwargs['instance'].monitor.pk)
-		# 	self.fields['monitor'].queryset = query_monitor_pk.union(query_monitor_activo_disponible)
-		# else:
-		# 	self.fields['monitor'].queryset = query_monitor_activo_disponible
+		query_equipo_activo_disponible = Computers.objects.filter(state="Activo disponible")
+		if kwargs['instance'].computers:
+			query_equipo_pk = Computers.objects.filter(pk=kwargs['instance'].computers.pk)
+			self.fields['computers'].queryset = query_equipo_pk.union(query_equipo_activo_disponible)
+		else:
+			self.fields['computers'].queryset = query_equipo_activo_disponible
+
+		query_monitor_activo_disponible = Monitors.objects.filter(state="Activo disponible")
+		if kwargs['instance'].monitor:
+			query_monitor_pk = Monitors.objects.filter(pk=kwargs['instance'].monitor.pk)
+			self.fields['monitor'].queryset = query_monitor_pk.union(query_monitor_activo_disponible)
+		else:
+			self.fields['monitor'].queryset = query_monitor_activo_disponible

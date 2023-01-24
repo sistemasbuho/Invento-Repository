@@ -88,21 +88,33 @@ class UpdateAssigment(_FormValid,UpdateView):
 
 	def post(self,request,*args,**kwargs):
 		form_header = dict(request.POST.lists())
-  
+
 		if 'passive_devices' not in form_header:
-			#capturo los ids de actor (manytomany)
+			# capturo los ids de actor (manytomany)
 			passive_devices_query = PassiveDevices.objects.none()
 
 		else:
-			#sino capturo todo los valores
+			# sino capturo todo los valores
 			passive_devices_query = PassiveDevices.objects.filter(pk__in=form_header['passive_devices']) 
 
 		#cargo los datos del formulario
 		form = self.form_class(request.POST, instance = self.get_object()) #get_object: hace una petición get para obtener el id para no usar una consulta
+
 		form.fields['passive_devices'].queryset = passive_devices_query
+		monitor_query = Monitors.objects.none()
+		if form_header['monitor'] != ['']:
+			monitor_query = Monitors.objects.filter(pk=int(form_header['monitor'][0])) 	
+		
+		form.fields['monitor'].queryset = monitor_query
+
+		computer_query = Monitors.objects.none()
+		if form_header['computers'] != ['']:
+			computer_query = Computers.objects.filter(pk=int(form_header['computers'][0])) 
+		
+		form.fields['computers'].queryset = computer_query
 
 		if form.is_valid():
-			
+
 			""" Start: Validación de estado de Dispositivos asignados"""		
 
 			# capturamos los datos del formulario inicial
@@ -111,7 +123,7 @@ class UpdateAssigment(_FormValid,UpdateView):
 
 			try:
 				pasivo_actualizado = PassiveDevices.objects.filter(pk__in=form_header['passive_devices'])
-			except KeyError:
+			except:
 				pasivo_actualizado = PassiveDevices.objects.none()
     
 			_difference_pasivo = set(pasivo_original).difference(set(pasivo_actualizado))
@@ -121,22 +133,35 @@ class UpdateAssigment(_FormValid,UpdateView):
 					PassiveDevices.objects.filter(pk=device.id).update(state="Activo disponible")
 
 			else:
-				PassiveDevices.objects.filter(pk__in=form_header['passive_devices']).update(state="Activo asignado")
-			
+				if 'passive_devices' in form_header:
+					PassiveDevices.objects.filter(pk__in=form_header['passive_devices']).update(state="Activo asignado")
+
 			""" End: Validación de estado de Dispositivos asignados"""
 
+			""" Start: Validación de estado de Monitores asignados"""
 			monitor_original = get_form_start.initial['monitor']
-			
+   
+			if monitor_original:
+				Monitors.objects.filter(id=monitor_original).update(state="Activo disponible")
+
 			if form.cleaned_data['monitor'] is not None:
 				monitor_actualizado = form.cleaned_data['monitor'].id
 				Monitors.objects.filter(id=monitor_actualizado).update(state="Activo asignado")
-			else:
-				monitor_actualizado = -1
-			_difference_monitor = int(monitor_original) != int(monitor_actualizado)
+    
+			""" End: Validación de estado de Monitores asignados"""
 
-			if _difference_monitor:
-				Monitors.objects.filter(id=monitor_original).update(state="Activo disponible")
-   
+			""" Start: Validación de estado de Equipos asignados"""
+
+			equipo_original = get_form_start.initial['computers']
+
+			if equipo_original:
+				Computers.objects.filter(id=equipo_original).update(state="Activo disponible")
+
+			if form.cleaned_data['computers'] is not None:
+				equipo_actualizado = form.cleaned_data['computers'].id
+				Computers.objects.filter(id=equipo_actualizado).update(state="Activo asignado")
+    
+			""" End: Validación de estado de Equipos asignados""" 
 
 			form.save()
 
