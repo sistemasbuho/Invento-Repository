@@ -101,12 +101,24 @@ WSGI_APPLICATION = 'inventory.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
+#    }
+#}
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+ 'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'inventarios', #clarity_produccion_migrado 
+        'USER': 'produccion_database_clarity',
+        'PASSWORD': 'PR4D5CC34N#B5H4$CL1R3TY%22',
+        'HOST': '144.126.221.28', #IP de su equipo, no publica
+        'PORT':  '5432',
     }
 }
+
 
 LOGIN_URL = "/authentication/login/"
 

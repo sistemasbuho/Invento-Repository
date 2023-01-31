@@ -1,0 +1,30 @@
+
+version: '3'
+
+services:
+ 
+  inventory:
+    image: buho/inventory
+    command: 'python3 manage.py runserver 0.0.0.0:8003'
+    #command: 'python3 manage.py runserver_plus --cert-file /etc/letsencrypt/live/verne-logisfashion.buho.media/fullchain.pem --key-file /etc/letsencrypt/live/verne-logisfashion.buho.media/privkey.pem  verne-logisfashion.buho.media:8003'
+    volumes:
+      - .:/inventory
+    environment:
+      VIRTUAL_HOST: 'invento.buho.media'
+      C_FORCE_ROOT: 1
+      LC_ALL: 'C.UTF-8'
+      LANG: 'C.UTF-8'
+      TZ: 'America/Bogota'
+      VIRTUAL_PORT: '8003'
+      LETSENCRYPT_HOST: 'invento.buho.media'
+      LETSENCRYPT_EMAIL: 'sistemas@buho.media'
+    networks:
+        - default
+        - nginx_proxy
+
+networks:
+  default:
+  nginx_proxy:
+    external: true
+
+

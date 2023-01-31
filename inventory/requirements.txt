@@ -1,0 +1,6 @@
+Django == 4.1
+Pillow==9.4
+xhtml2pdf==0.2.8
+django_debug_toolbar==3.8.1
+django-ckeditor==6.5.1
+psycopg2-binary==2.9.5
