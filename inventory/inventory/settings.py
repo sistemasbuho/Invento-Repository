@@ -198,3 +198,6 @@ CKEDITOR_CONFIGS = {
  
     }
 }
+
+CSRF_COOKIE_SECURE = None
+CSRF_TRUSTED_ORIGINS = ['https://invento.buho.media']

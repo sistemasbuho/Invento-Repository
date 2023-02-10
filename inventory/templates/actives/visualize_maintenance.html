@@ -21,8 +21,11 @@
             </nav> {% endcomment %}
           </div>
           <div class="col-lg-6 col-5 text-right">
-            <a href="{% url 'actives:register_maintenance' %}" class="btn btn-sm btn-neutral"> <i class="ni ni-settings text-orange"></i> Agregar mantenimiento</a>
+            <a href="{% url 'actives:register_maintenance_computer' %}" class="btn btn-sm btn-neutral"> <i class="ni ni-settings text-orange"></i> Agregar mantenimiento Computador</a>
+            <a href="{% url 'actives:register_maintenance_device' %}" class="btn btn-sm btn-neutral"> <i class="ni ni-settings text-orange"></i> Agregar mantenimiento Dispositivo</a>
+            <br><a href="{% url 'actives:register_maintenance_monitor' %}" class="btn btn-sm btn-neutral"> <i class="ni ni-settings text-orange"></i> Agregar mantenimiento Monitor</a>
           </div>
+          
         </div>
       </div>
     </div>
