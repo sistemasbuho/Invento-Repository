@@ -85,6 +85,20 @@
                     </div>
                   </div>
 
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-name">{{form.others_computers.label}}</label>
+                      {{form.others_computers}}
+                    </div>
+                  </div>
+
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-name">{{form.others_monitor.label}}</label>
+                      {{form.others_monitor}}
+                    </div>
+                  </div>
+
                   <div class="col-lg-12">
                     <div class="form-group">
                       <label class="form-control-label" for="input-name">{{form.passive_devices.label}}</label>
@@ -177,6 +191,9 @@
 
   console.log("asd ","{% url "users:search_passive_devices" %}")
   BuscarPorNombreModeloMultiple('#passive_devices_crear_id', '{% url "users:search_passive_devices" %}');
+  BuscarPorNombreModeloMultiple('#id_others_computers', '{% url "users:search_computer" %}');
+  BuscarPorNombreModeloMultiple('#id_others_monitor', '{% url "users:search_monitor" %}');
+  
 
 </script>
 

@@ -47,7 +47,7 @@ class FormAssignRegister(forms.ModelForm):
 	class Meta:
 		model = AssignUsers
   
-		fields=['monitor','user','assignment','date_assignment','computers','passive_devices','description']
+		fields=['monitor','user','assignment','date_assignment','computers','passive_devices','description','others_monitor','others_computers']
 
 		widgets = {
 			'user':forms.Select(
@@ -90,13 +90,15 @@ class FormAssignRegister(forms.ModelForm):
   
 		self.fields['computers'].queryset = Computers.objects.filter(state="Activo disponible")
 		self.fields['monitor'].queryset = Monitors.objects.filter(state="Activo disponible")
+		self.fields['others_monitor'].queryset = Computers.objects.filter(state="Activo disponible")
+		self.fields['others_computers'].queryset = Monitors.objects.filter(state="Activo disponible")
 
     
 
 class FormAssignUpdate(forms.ModelForm):
 	class Meta:
 		model = AssignUsers
-		fields=['monitor','user','assignment','date_assignment','computers','passive_devices','description']
+		fields=['monitor','user','assignment','date_assignment','computers','passive_devices','description','others_monitor','others_computers']
   
 		widgets = {
 			'user':forms.Select(
@@ -154,3 +156,23 @@ class FormAssignUpdate(forms.ModelForm):
 			self.fields['monitor'].queryset = query_monitor_pk.union(query_monitor_activo_disponible)
 		else:
 			self.fields['monitor'].queryset = query_monitor_activo_disponible
+		
+
+		### otros monitores
+
+		query_monitor_others_activo_disponible = Monitors.objects.filter(state="Activo disponible")
+		if kwargs['instance'].monitor:
+			query_monitor_pk = Monitors.objects.filter(pk=kwargs['instance'].monitor.pk)
+			self.fields['others_monitor'].queryset = query_monitor_pk.union(query_monitor_others_activo_disponible)
+		else:
+			self.fields['others_monitor'].queryset = query_monitor_others_activo_disponible
+
+
+		### otros computadores
+
+		query_computador_others_activo_disponible = Monitors.objects.filter(state="Activo disponible")
+		if kwargs['instance'].monitor:
+			query_monitor_pk = Monitors.objects.filter(pk=kwargs['instance'].monitor.pk)
+			self.fields['others_computers'].queryset = query_monitor_pk.union(query_computador_others_activo_disponible)
+		else:
+			self.fields['others_computers'].queryset = query_computador_others_activo_disponible

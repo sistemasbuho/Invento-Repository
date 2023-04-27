@@ -38,6 +38,8 @@ class AssignUsers(models.Model):
     passive_devices=models.ManyToManyField(PassiveDevices, verbose_name=u'Dispositivos asignados',blank=True)
     monitor=models.ForeignKey(Monitors, on_delete=models.CASCADE,null=True,blank=True, verbose_name=u'Monitor asignado')
     description=RichTextUploadingField('Descripción de entrega y carga de imágenes',max_length=30000,null=True,blank=True,)
+    others_monitor = models.ManyToManyField(Monitors, verbose_name=u'Otros Monitores',related_name="others_monitor",blank=True)
+    others_computers = models.ManyToManyField(Computers, verbose_name=u'Otros Computadores',related_name="others_computers",blank=True)
 
 
 

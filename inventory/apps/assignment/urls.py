@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import *
-from apps.assignment.endpoints import SearchPassiveDevices
+from apps.assignment.endpoints import SearchPassiveDevices,SearchComputers,SearchMonitors
 
 urlpatterns = [
  	path('list/user/', ListUsers.as_view(), name='visualize_users'),
@@ -11,5 +11,7 @@ urlpatterns = [
  	path('generate/<int:pk>', GeneratePdf.as_view(), name='generate_pdf'),
 
 	path('search/search_passive_devices/', SearchPassiveDevices.as_view(), name='search_passive_devices'),
+    path('search/search_computer/', SearchComputers.as_view(), name='search_computer'),
+    path('search/search_monitor/', SearchMonitors.as_view(), name='search_monitor'),
  
 ]
